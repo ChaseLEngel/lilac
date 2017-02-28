@@ -1,44 +1,34 @@
 import React, { Component } from 'react';
 
-import api from '../utilities/api';
 
-import Request from '../components/request'
+import GroupStore from '../store/groupStore';
 
 class Group extends Component {
 
   constructor() {
     super()
     this.state = {
-      group: {},
-      requests: []
+      group: {}
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    api.group(nextProps.params.groupId).then((response) => {
-      this.setState ({
-        group: response.data
-      })
-    })
-    api.requests(nextProps.params.groupId).then((response) => {
-      this.setState ({
-        requests: response.data
-      })
+    this.setState({
+      group: this.getGroup(nextProps.params.groupId)
     })
   }
 
+  getGroup(id) {
+    return GroupStore.getGroup(id)
+  }
+
   render() {
-    var group = this.state.group
-    var requestList = this.state.requests.map((request) =>
-      <Request key={request.request_id} groupId={group.group_id} request={request}/>
-    ) 
+    if(this.state.group === undefined) {
+      return null
+    }
     return (
       <div>
-        <p>Name: {group.name}</p>
-        <p>Link: {group.link}</p>
-        <p>Download Path: {group.download_path}</p>
-        <h4>Requests({requestList.length})</h4>
-        {requestList}
+        <p>{this.state.group.name}</p>
       </div>
     );
   }
