@@ -9,42 +9,49 @@ import History from './history';
 
 class Request extends Component {
 
-  constructor() {
+  constructor(props) {
     super()
+
+    this.getHistory = this.getHistory.bind(this)
+
+    var group_id = props.request.group_id
+    var request_id = props.request.request_id
     this.state = {
-      request: {},
-      history: HistoryStore.getHistory(),
+      request: props.request,
+      history: HistoryStore.getHistory(request_id),
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    var group_id = nextProps.params.group_id
-    var request_id = nextProps.params.request_id
-    HistoryActions.getHistory(group_id, request_id)
+  getHistory() {
+    var request_id = this.state.request.request_id
     this.setState({
-      request: RequestStore.getRequest(request_id),
+      history: HistoryStore.getHistory(request_id)
     })
   }
 
-  historyList() {
-    var history = this.state.history
-    if(history == null) {
-      return []
-    }
-    return history.map((history) =>
-      <History key={history.match_history_id} history={history} />
-    )
+  componentWillMount() {
+    HistoryStore.on("change", this.getHistory)
+  }
+
+  componentWillUnmount() {
+    HistoryStore.removeListener("change", this.getHistory)
+  }
+
+  componentDidMount() {
+    var group_id = this.state.request.group_id
+    var request_id = this.state.request.request_id
+    HistoryActions.getHistory(group_id, request_id)
   }
 
   render() {
-    var request = this.state.request
-    var historyList = this.historyList()
+    var historyList = this.state.history.map((history) => {
+      return <History key={history.match_history_id} history={history} />
+    })
     return (
       <div>
-        <p>{request.name}</p>
-        <p>{request.regex}</p>
-        <p>{request.download_path}</p>
-        <h4>History({historyList.length})</h4>
+        <strong>{this.props.request.name}</strong>
+        <p>{this.props.request.regex}</p>
+        <p>{this.props.request.download_path}</p>
         {historyList}
       </div>
     );

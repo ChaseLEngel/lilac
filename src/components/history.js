@@ -3,9 +3,10 @@ import React, { Component } from 'react';
 class History extends Component {
 
   render() {
-    console.log(this.props)
     return (
       <div>
+        <p>{this.props.history.file}</p>
+        <p>{this.props.history.timestamp}</p>
       </div>
     );
   }
