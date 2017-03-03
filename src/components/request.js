@@ -1,38 +1,50 @@
 import React, { Component } from 'react';
 
-import History from 'history'
-import api from '../utilities/api'
+import * as HistoryActions from '../actions/historyactions';
+
+import RequestStore from '../store/requeststore';
+import HistoryStore from '../store/historystore';
+
+import History from './history';
 
 class Request extends Component {
 
   constructor() {
     super()
     this.state = {
-      history: []
+      request: {},
+      history: HistoryStore.getHistory(),
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps)
-    api.history(this.props.groupId, this.props.request.request_id).then((response) => {
-      this.setState ({
-        history: response.data
-      })
+    var group_id = nextProps.params.group_id
+    var request_id = nextProps.params.request_id
+    HistoryActions.getHistory(group_id, request_id)
+    this.setState({
+      request: RequestStore.getRequest(request_id),
     })
   }
 
-  render() {
-    var request = this.props.request
-    var historyList = this.state.history.map((history) =>
-      <History key={history.history_id} history={history} />
+  historyList() {
+    var history = this.state.history
+    if(history == null) {
+      return []
+    }
+    return history.map((history) =>
+      <History key={history.match_history_id} history={history} />
     )
+  }
+
+  render() {
+    var request = this.state.request
+    var historyList = this.historyList()
     return (
       <div>
-        <p>Name: {request.name}</p>
-        <p>Regex: {request.regex}</p>
-        <p>Match Count: {request.match_count}</p>
-        <p>Download Path: {request.download_path}</p>
-        <h4>History</h4>
+        <p>{request.name}</p>
+        <p>{request.regex}</p>
+        <p>{request.download_path}</p>
+        <h4>History({historyList.length})</h4>
         {historyList}
       </div>
     );

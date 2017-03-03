@@ -2,18 +2,10 @@ import dispatcher from "../dispatcher";
 
 import api from "../utilities/api"
 
-export function createGroup(name) {
-  dispatcher.dispatch({
-    type: "CREATE_GROUP",
-    name,
-  });
-}
-
-export function deleteGroup(id) {
-  dispatcher.dispatch({
-    type: "DELETE_GROUP",
-    id,
-  });
+export function check(group_id) {
+  api.checkGroup(group_id).then((response) => {
+    dispatcher.dispatch({type: "CHECK_GROUP", data: {}});
+  })
 }
 
 export function getGroups() {

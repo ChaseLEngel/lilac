@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import GroupStore from '../store/groupStore';
-import * as GroupActions from '../actions/GroupActions';
+import * as GroupActions from '../actions/groupactions';
 import NavItem from './navitem';
 
 class Navbar extends Component {

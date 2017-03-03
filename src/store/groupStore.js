@@ -6,15 +6,13 @@ class GroupStore extends EventEmitter {
 
   constructor() {
     super()
-
     this.groups = []
   }
 
   getGroup(id) {
-    var group = this.groups.find(function(element) {
+    return this.groups.find(function(element) {
       return element.group_id == id
     })
-    return group
   }
 
   getGroups() {
@@ -23,17 +21,17 @@ class GroupStore extends EventEmitter {
 
   handleActions(action) {
     switch(action.type) {
-      case "CREATE_GROUP": {
-        this.createGroup(action.name)
-      }
       case "GET_GROUPS": {
         this.groups = action.groups
         this.emit("change")
+        break
       }
       case "GET_GROUP": {
         this.getGroup(action.group)
         this.emit("change")
+        break
       }
+      default: {}
     }
   }
 
@@ -41,7 +39,5 @@ class GroupStore extends EventEmitter {
 
 const groupStore = new GroupStore();
 dispatcher.register(groupStore.handleActions.bind(groupStore));
-
-window.dispatcher = dispatcher;
 
 export default groupStore;
