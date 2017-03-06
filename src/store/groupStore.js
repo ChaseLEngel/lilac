@@ -15,12 +15,29 @@ class GroupStore extends EventEmitter {
     })
   }
 
+  deleteGroup(group_id) {
+    this.groups = this.groups.filter(function(element) {
+      return element.group_id != group_id
+    })
+  }
+
   getGroups() {
     return this.groups;
   }
 
   handleActions(action) {
     switch(action.type) {
+      case "CREATE_GROUP": {
+        this.groups.push(action.group)
+        this.emit("change")
+        break
+      }
+      case "DELETE_GROUP": {
+        console.log("store handleactions:"+action.group.group_id)
+        this.deleteGroup(action.group.group_id)
+        this.emit("change")
+        break
+      }
       case "GET_GROUPS": {
         this.groups = action.groups
         this.emit("change")

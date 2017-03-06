@@ -47,10 +47,26 @@ class RequestStore extends EventEmitter {
     return requests
   }
 
+  deleteRequest(request_id) {
+    this.requests = this.requests.filter(function(element) {
+      return element.request_id != request_id
+    })
+  }
+
   handleActions(action) {
     switch(action.type) {
       case "GET_REQUESTS": {
         this.insertRequests(action.requests)
+        this.emit("change")
+        break
+      }
+      case "CREATE_REQUEST": {
+        this.requests.push(action.request)
+        this.emit("change")
+        break
+      }
+      case "DELETE_REQUEST": {
+        this.deleteRequest(action.request.request_id)
         this.emit("change")
         break
       }

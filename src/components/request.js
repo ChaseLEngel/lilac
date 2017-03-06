@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 
+import { Button } from 'reactstrap';
+
 import * as HistoryActions from '../actions/historyactions';
 
-import RequestStore from '../store/requeststore';
+import * as RequestActions from '../actions/requestactions';
+
 import HistoryStore from '../store/historystore';
 
 import History from './history';
@@ -13,6 +16,7 @@ class Request extends Component {
     super()
 
     this.getHistory = this.getHistory.bind(this)
+    this.deleteRequest = this.deleteRequest.bind(this)
 
     var group_id = props.request.group_id
     var request_id = props.request.request_id
@@ -27,6 +31,12 @@ class Request extends Component {
     this.setState({
       history: HistoryStore.getHistory(request_id)
     })
+  }
+
+  deleteRequest() {
+    var group_id = this.state.request.group_id
+    var request_id = this.state.request.request_id
+    RequestActions.deleteRequest(group_id, request_id)
   }
 
   componentWillMount() {
@@ -50,6 +60,7 @@ class Request extends Component {
     return (
       <div>
         <strong>{this.props.request.name}</strong>
+        <Button onClick={this.deleteRequest}>Delete Request</Button>
         <p>{this.props.request.regex}</p>
         <p>{this.props.request.download_path}</p>
         {historyList}

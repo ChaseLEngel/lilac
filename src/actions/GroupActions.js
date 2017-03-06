@@ -19,3 +19,16 @@ export function getGroup(id) {
     dispatcher.dispatch({type: "GET_GROUP", group: response.data});
   })
 }
+
+export function createGroup(group) {
+  api.createGroup(group).then((response) => {
+    dispatcher.dispatch({type: "CREATE_GROUP", group: response.data});
+  })
+}
+
+export function deleteGroup(group_id) {
+  console.log("action deletegroup: "+group_id)
+  api.deleteGroup(group_id).then((response) => {
+    dispatcher.dispatch({type: "DELETE_GROUP", group: response.data});
+  })
+}
