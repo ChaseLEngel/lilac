@@ -8,6 +8,7 @@ import * as RequestActions from '../actions/requestactions';
 
 import HistoryStore from '../store/historystore';
 
+import EditRequest from './editrequest';
 import History from './history';
 
 class Request extends Component {
@@ -17,10 +18,12 @@ class Request extends Component {
 
     this.getHistory = this.getHistory.bind(this)
     this.deleteRequest = this.deleteRequest.bind(this)
+    this.toggleEditModal = this.toggleEditModal.bind(this)
 
     var group_id = props.request.group_id
     var request_id = props.request.request_id
     this.state = {
+      showModal: false,
       request: props.request,
       history: HistoryStore.getHistory(request_id),
     }
@@ -30,6 +33,12 @@ class Request extends Component {
     var request_id = this.state.request.request_id
     this.setState({
       history: HistoryStore.getHistory(request_id)
+    })
+  }
+
+  toggleEditModal() {
+    this.setState({
+      showModal: !this.state.showModal
     })
   }
 
@@ -59,8 +68,10 @@ class Request extends Component {
     })
     return (
       <div>
+        <EditRequest request={this.state.request} show={this.state.showModal} />
         <strong>{this.props.request.name}</strong>
-        <Button onClick={this.deleteRequest}>Delete Request</Button>
+        <Button size="sm" onClick={this.toggleEditModal}>Edit Request</Button>
+        <Button size="sm" onClick={this.deleteRequest}>Delete Request</Button>
         <p>{this.props.request.regex}</p>
         <p>{this.props.request.download_path}</p>
         {historyList}

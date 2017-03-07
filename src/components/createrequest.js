@@ -6,11 +6,10 @@ import * as RequestActions from '../actions/requestactions'
 
 class CreateRequest extends Component {
 
-  constructor(props) {
-    super(props)
-    // Allow getRequest to access this instance.
+  constructor() {
+    super()
     this.state = {
-      show: this.props.show,
+      show: false,
       regex: "",
       download_path: "",
       name: ""
@@ -29,7 +28,9 @@ class CreateRequest extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.toggle()
+    if(nextProps.show !== this.state.show) {
+      this.toggle()
+    }
   }
 
   createRequest() {

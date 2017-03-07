@@ -27,8 +27,14 @@ export function createGroup(group) {
 }
 
 export function deleteGroup(group_id) {
-  console.log("action deletegroup: "+group_id)
   api.deleteGroup(group_id).then((response) => {
     dispatcher.dispatch({type: "DELETE_GROUP", group: response.data});
+  })
+}
+
+export function editGroup(group) {
+  api.editGroup(group).then((response) => {
+    console.log(response)
+    dispatcher.dispatch({type: "EDIT_GROUP", group: response.data});
   })
 }

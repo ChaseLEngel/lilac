@@ -15,6 +15,11 @@ class GroupStore extends EventEmitter {
     })
   }
 
+  editGroup(group) {
+    this.deleteGroup(group.group_id)
+    this.groups.push(group)
+  }
+
   deleteGroup(group_id) {
     this.groups = this.groups.filter(function(element) {
       return element.group_id != group_id
@@ -33,7 +38,6 @@ class GroupStore extends EventEmitter {
         break
       }
       case "DELETE_GROUP": {
-        console.log("store handleactions:"+action.group.group_id)
         this.deleteGroup(action.group.group_id)
         this.emit("change")
         break
@@ -45,6 +49,11 @@ class GroupStore extends EventEmitter {
       }
       case "GET_GROUP": {
         this.getGroup(action.group)
+        this.emit("change")
+        break
+      }
+      case "EDIT_GROUP": {
+        this.editGroup(action.group)
         this.emit("change")
         break
       }

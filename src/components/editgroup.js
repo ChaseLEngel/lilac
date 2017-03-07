@@ -4,21 +4,33 @@ import { Form, FormGroup, Label, Input, Button, Modal, ModalHeader, ModalBody, M
 
 import * as GroupActions from '../actions/groupactions'
 
-class CreateGroup extends Component {
+class EditGroup extends Component {
 
-  constructor(props) {
-    super(props)
+  constructor() {
+    super()
     this.state = {
       show: false,
-      download_path: "",
+      group_id: "",
+      name: "",
       link: "",
-      name: ""
+      download_path: "",
     }
     this.toggle = this.toggle.bind(this)
     this.handleDownloadPathChange = this.handleDownloadPathChange.bind(this)
     this.handleLinkChange = this.handleLinkChange.bind(this)
     this.handleNameChange = this.handleNameChange.bind(this)
-    this.createGroup = this.createGroup.bind(this)
+    this.editGroup = this.editGroup.bind(this)
+  }
+
+  editGroup() {
+    var group = {
+      group_id: this.state.group_id,
+      name: this.state.name,
+      link: this.state.link,
+      download_path: this.state.download_path
+    }
+    GroupActions.editGroup(group)
+    this.toggle()
   }
 
   toggle() {
@@ -28,21 +40,16 @@ class CreateGroup extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    this.setState({
+      group_id: nextProps.group.group_id,
+      name: nextProps.group.name,
+      download_path: nextProps.group.download_path,
+      link: nextProps.group.link
+    })
     if(nextProps.show != this.state.show) {
       this.toggle()
     }
   }
-
-  createGroup() {
-    var group = {
-      name: this.state.name,
-      download_path: this.state.download_path,
-      link: this.state.link
-    }
-    GroupActions.createGroup(group)
-    this.toggle()
-  }
-
 
   handleDownloadPathChange(event) {
     this.setState({
@@ -67,22 +74,22 @@ class CreateGroup extends Component {
       <div>
         <Modal isOpen={this.state.show} toggle={this.toggle}>
           <ModalHeader>
-            New Group
+            Edit Group
           </ModalHeader>
           <ModalBody>
             <Form>
               <FormGroup>
-                <Label for="groupName">Name</Label>
-                <Input type="text" name="name" id="groupName" value={this.state.name} onChange={this.handleNameChange}/>
-                <Label for="groupLink">RSS Link</Label>
-                <Input type="text" name="link" id="groupLink" value={this.state.link} onChange={this.handleLinkChange}/>
-                <Label for="groupDownloadPath">Download Path</Label>
-                <Input type="text" name="downloadPath" id="groupDownloadPath" value={this.state.download_path} onChange={this.handleDownloadPathChange}/>
+                <Label for="editGroupName">Name</Label>
+                <Input type="text" name="editGroupName" id="editGroupName" value={this.state.name} onChange={this.handleNameChange}/>
+                <Label for="editGroupLink">RSS Link</Label>
+                <Input type="text" name="editGrouplink" id="editGroupLink" value={this.state.link} onChange={this.handleLinkChange}/>
+                <Label for="editGroupDownloadPath">Download Path</Label>
+                <Input type="text" name="editGroupdownloadPath" id="editGroupDownloadPath" value={this.state.download_path} onChange={this.handleDownloadPathChange}/>
               </FormGroup>
             </Form>
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={this.createGroup}>Create</Button>
+            <Button color="primary" onClick={this.editGroup}>Submit</Button>
             <Button color="secondary" onClick={this.toggle}>Cancel</Button>
           </ModalFooter>
         </Modal>
@@ -91,4 +98,4 @@ class CreateGroup extends Component {
   }
 }
 
-export default CreateGroup;
+export default EditGroup;

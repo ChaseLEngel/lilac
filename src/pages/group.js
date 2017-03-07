@@ -4,6 +4,8 @@ import { Button } from 'reactstrap';
 
 import RequestList from '../components/requestlist'
 
+import EditGroup from '../components/editgroup';
+
 import GroupStore from '../store/groupStore';
 
 import * as RequestActions from '../actions/requestactions';
@@ -14,9 +16,17 @@ class Group extends Component {
   constructor() {
     super()
     this.state = {
+      showModal: false,
       group: {},
       requests: [],
     }
+    this.toggleModal = this.toggleModal.bind(this)
+  }
+
+  toggleModal() {
+    this.setState({
+      showModal: !this.state.showModal
+    })
   }
 
   delete() {
@@ -42,6 +52,8 @@ class Group extends Component {
   render() {
     return (
       <div>
+        <EditGroup group={this.state.group} show={this.state.showModal} />
+        <Button onClick={this.toggleModal.bind(this)}>Edit</Button>
         <Button onClick={this.delete.bind(this)}>Delete</Button>
         <Button onClick={this.check.bind(this)}>Check</Button>
         <p>{this.state.group.download_path}</p>

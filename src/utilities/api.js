@@ -46,6 +46,14 @@ var api = {
   deleteRequest(group_id, request_id) {
     var url = "http://localhost:8080/groups/"+group_id+"/requests/"+request_id
     return this.contact(url, 'DELETE')
+  },
+  editGroup(group) {
+    var url = "http://localhost:8080/groups/"+group.group_id
+    return this.contact(url, 'PUT', group)
+  },
+  editRequest(request) {
+    var url = "http://localhost:8080/groups/"+request.group_id+"/requests/"+request.request_id
+    return this.contact(url, 'PUT', request)
   }
 }
 

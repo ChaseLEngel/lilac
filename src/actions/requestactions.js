@@ -17,3 +17,8 @@ export function deleteRequest(group_id, request_id) {
     dispatcher.dispatch({type: "DELETE_REQUEST", request: response.data});
   })
 }
+export function editRequest(request) {
+  api.editRequest(request).then((response) => {
+    dispatcher.dispatch({type: "EDIT_REQUEST", request: response.data});
+  })
+}

@@ -47,6 +47,11 @@ class RequestStore extends EventEmitter {
     return requests
   }
 
+  editRequest(request) {
+    this.deleteRequest(request.request_id)
+    this.requests.push(request)
+  }
+
   deleteRequest(request_id) {
     this.requests = this.requests.filter(function(element) {
       return element.request_id != request_id
@@ -67,6 +72,11 @@ class RequestStore extends EventEmitter {
       }
       case "DELETE_REQUEST": {
         this.deleteRequest(action.request.request_id)
+        this.emit("change")
+        break
+      }
+      case "EDIT_REQUEST": {
+        this.editRequest(action.request)
         this.emit("change")
         break
       }

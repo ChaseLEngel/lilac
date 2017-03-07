@@ -57,7 +57,7 @@ class RequestList extends Component {
           Requests ({requests.length})
           <Button onClick={this.toggleCreateRequest}>New Request</Button>
         </h4>
-        <CreateRequest group_id={this.props.group_id}/>
+        <CreateRequest show={this.state.showCreateRequest} group_id={this.props.group_id}/>
         {requests}
       </div>
     )
