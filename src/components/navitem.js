@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
 
-import {Link} from 'react-router'
+import { Link } from 'react-router';
 
-class NavItem extends Component {
+import { NavItem, NavLink } from 'reactstrap';
+
+class GroupItem extends Component {
 
   render() {
     return (
-      <li role="presentation">
-        <Link to={"/groups/"+this.props.id}>{this.props.name}</Link>
-      </li>
+      <NavItem>
+        <NavLink tag={Link} to={"/groups/"+this.props.id}>{this.props.name}</NavLink>
+      </NavItem>
     );
   }
 }
 
-export default NavItem;
+export default GroupItem;

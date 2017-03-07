@@ -6,15 +6,14 @@ import * as GroupActions from '../actions/groupactions'
 
 class CreateGroup extends Component {
 
-  constructor(props) {
-    super(props)
+  constructor() {
+    super()
     this.state = {
       show: false,
       download_path: "",
       link: "",
       name: ""
     }
-    this.toggle = this.toggle.bind(this)
     this.handleDownloadPathChange = this.handleDownloadPathChange.bind(this)
     this.handleLinkChange = this.handleLinkChange.bind(this)
     this.handleNameChange = this.handleNameChange.bind(this)
@@ -40,7 +39,7 @@ class CreateGroup extends Component {
       link: this.state.link
     }
     GroupActions.createGroup(group)
-    this.toggle()
+    this.props.toggle()
   }
 
 
@@ -65,7 +64,7 @@ class CreateGroup extends Component {
   render() {
     return (
       <div>
-        <Modal isOpen={this.state.show} toggle={this.toggle}>
+        <Modal isOpen={this.state.show} toggle={this.props.toggle}>
           <ModalHeader>
             New Group
           </ModalHeader>
@@ -83,7 +82,7 @@ class CreateGroup extends Component {
           </ModalBody>
           <ModalFooter>
             <Button color="primary" onClick={this.createGroup}>Create</Button>
-            <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+            <Button color="secondary" onClick={this.props.toggle}>Cancel</Button>
           </ModalFooter>
         </Modal>
       </div>

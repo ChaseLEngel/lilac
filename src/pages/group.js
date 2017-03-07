@@ -13,7 +13,7 @@ import * as GroupActions from '../actions/groupactions';
 
 class Group extends Component {
 
-  constructor() {
+  constructor(props) {
     super()
     this.state = {
       showModal: false,

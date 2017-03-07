@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Button } from 'reactstrap';
+import { Container, Row, Col, Button } from 'reactstrap';
 
 import Header from './components/header';
 import CreateGroup from './components/creategroup';
@@ -26,11 +26,17 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Header />
-        <Button onClick={this.toggleCreateGroup}>New Group</Button>
-        <CreateGroup show={this.state.showCreateGroup}/>
-        <Navbar />
-        {this.props.children}
+        <Row>
+          <Col>
+            <Header />
+            <Navbar />
+            <CreateGroup toggle={this.toggleCreateGroup} show={this.state.showCreateGroup}/>
+            <Button onClick={this.toggleCreateGroup}>New Group</Button>
+          </Col>
+        </Row>
+        <Container>
+          {this.props.children}
+        </Container>
       </div>
     );
   }

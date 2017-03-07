@@ -85,7 +85,7 @@ class EditRequest extends Component {
                 <Input type="text" name="editRequestName" id="editRequestName" value={this.state.name} onChange={this.handleNameChange}/>
                 <Label for="editRequestRegex">Regex</Label>
                 <Input type="text" name="editRequestregex" id="editRequestRegex" value={this.state.regex} onChange={this.handleRegexChange}/>
-                <Label for="editRequestDownloadPath">Download Path</Label>
+                <Label for="editRequestDownloadPath">Download Path (optional)</Label>
                 <Input type="text" name="editRequestdownloadPath" id="editRequestDownloadPath" value={this.state.download_path} onChange={this.handleDownloadPathChange}/>
               </FormGroup>
             </Form>

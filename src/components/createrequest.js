@@ -76,7 +76,7 @@ class CreateRequest extends Component {
                 <Input type="text" name="name" id="requestName" value={this.state.name} onChange={this.handleNameChange}/>
                 <Label for="requestRegex">Reqular Expression</Label>
                 <Input type="text" name="regex" id="requestRegex" value={this.state.regex} onChange={this.handleRegexChange}/>
-                <Label for="requestDownloadPath">Download Path</Label>
+                <Label for="requestDownloadPath">Download Path (optional)</Label>
                 <Input type="text" name="downloadPath" id="requestDownloadPath" value={this.state.download_path} onChange={this.handleDownloadPathChange}/>
               </FormGroup>
             </Form>
