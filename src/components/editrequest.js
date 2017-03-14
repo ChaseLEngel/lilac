@@ -8,73 +8,55 @@ class EditRequest extends Component {
 
   constructor() {
     super()
+    var request = {name: "", regex: "", download_path: ""}
     this.state = {
-      show: false,
-      request_id: "",
-      name: "",
-      regex: "",
-      download_path: "",
+      request: request
     }
-    this.toggle = this.toggle.bind(this)
-    this.handleDownloadPathChange = this.handleDownloadPathChange.bind(this)
-    this.handleRegexChange = this.handleRegexChange.bind(this)
-    this.handleNameChange = this.handleNameChange.bind(this)
-    this.editRequest = this.editRequest.bind(this)
+    this.downloadPathChange = this.downloadPathChange.bind(this)
+    this.regexChange = this.regexChange.bind(this)
+    this.nameChange = this.nameChange.bind(this)
+    this.edit = this.edit.bind(this)
   }
 
-  editRequest() {
-    var request = {
-      request_id: this.state.request_id,
-      group_id: this.state.group_id,
-      name: this.state.name,
-      regex: this.state.regex,
-      download_path: this.state.download_path
-    }
-    RequestActions.editRequest(request)
-    this.toggle()
+  edit() {
+    RequestActions.editRequest(this.state.request)
+    this.props.toggler()
   }
 
-  toggle() {
+  downloadPathChange(event) {
+    var request = this.state.request
+    request.download_path = event.target.value
     this.setState({
-      show: !this.state.show
+      request: request
+    })
+  }
+
+  nameChange(event) {
+    var request = this.state.request
+    request.name = event.target.value
+    this.setState({
+      request: request
+    })
+  }
+
+  regexChange(event) {
+    var request = this.state.request
+    request.regex = event.target.value
+    this.setState({
+      request: request
     })
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      request_id: nextProps.request.request_id,
-      name: nextProps.request.name,
-      download_path: nextProps.request.download_path,
-      group_id: nextProps.request.group_id,
-      regex: nextProps.request.regex
-    })
-    if(nextProps.show != this.state.show) {
-      this.toggle()
-    }
-  }
-
-  handleDownloadPathChange(event) {
-    this.setState({
-      download_path: event.target.value
-    })
-  }
-
-  handleNameChange(event) {
-    this.setState({
-      name: event.target.value
-    })
-  }
-
-  handleRegexChange(event) {
-    this.setState({
-      regex: event.target.value
+      request: nextProps.request
     })
   }
 
   render() {
     return (
       <div>
-        <Modal isOpen={this.state.show} toggle={this.toggle}>
+        <Modal isOpen={this.props.show} toggle={this.props.toggler}>
           <ModalHeader>
             Edit Request
           </ModalHeader>
@@ -82,17 +64,17 @@ class EditRequest extends Component {
             <Form>
               <FormGroup>
                 <Label for="editRequestName">Name</Label>
-                <Input type="text" name="editRequestName" id="editRequestName" value={this.state.name} onChange={this.handleNameChange}/>
+                <Input type="text" name="editRequestName" id="editRequestName" value={this.state.request.name} onChange={this.nameChange}/>
                 <Label for="editRequestRegex">Regex</Label>
-                <Input type="text" name="editRequestregex" id="editRequestRegex" value={this.state.regex} onChange={this.handleRegexChange}/>
+                <Input type="text" name="editRequestregex" id="editRequestRegex" value={this.state.request.regex} onChange={this.regexChange}/>
                 <Label for="editRequestDownloadPath">Download Path (optional)</Label>
-                <Input type="text" name="editRequestdownloadPath" id="editRequestDownloadPath" value={this.state.download_path} onChange={this.handleDownloadPathChange}/>
+                <Input type="text" name="editRequestdownloadPath" id="editRequestDownloadPath" value={this.state.request.download_path} onChange={this.downloadPathChange}/>
               </FormGroup>
             </Form>
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={this.editRequest}>Submit</Button>
-            <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+            <Button color="primary" onClick={this.edit}>Submit</Button>
+            <Button color="secondary" onClick={this.props.toggler}>Cancel</Button>
           </ModalFooter>
         </Modal>
       </div>

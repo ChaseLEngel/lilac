@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Button } from 'reactstrap';
+import { ListGroup, Button } from 'reactstrap';
 
 import CreateRequest from '../components/createrequest';
 import Request from '../components/request';
@@ -53,12 +53,11 @@ class RequestList extends Component {
     var requests = this.requestsList()
     return (
       <div>
-        <h4>
-          Requests ({requests.length})
           <Button onClick={this.toggleCreateRequest}>New Request</Button>
-        </h4>
-        <CreateRequest show={this.state.showCreateRequest} group_id={this.props.group_id}/>
-        {requests}
+        <CreateRequest toggler={this.toggleCreateRequest} show={this.state.showCreateRequest} group_id={this.props.group_id}/>
+        <ListGroup>
+          {requests}
+        </ListGroup>
       </div>
     )
   }

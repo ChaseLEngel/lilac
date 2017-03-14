@@ -8,81 +8,67 @@ class CreateGroup extends Component {
 
   constructor() {
     super()
+    var group = {name: "", link: "", download_path: ""}
     this.state = {
-      show: false,
-      download_path: "",
-      link: "",
-      name: ""
+      group: group
     }
-    this.handleDownloadPathChange = this.handleDownloadPathChange.bind(this)
-    this.handleLinkChange = this.handleLinkChange.bind(this)
-    this.handleNameChange = this.handleNameChange.bind(this)
-    this.createGroup = this.createGroup.bind(this)
+    this.downloadPathChange = this.downloadPathChange.bind(this)
+    this.linkChange = this.linkChange.bind(this)
+    this.nameChange = this.nameChange.bind(this)
+    this.create = this.create.bind(this)
   }
 
-  toggle() {
+  create() {
+    GroupActions.createGroup(this.state.group)
+    this.props.toggler()
+  }
+
+  downloadPathChange(event) {
+    var group = this.state.group
+    group.download_path = event.target.value
     this.setState({
-      show: !this.state.show
+      group: group
     })
   }
 
-  componentWillReceiveProps(nextProps) {
-    if(nextProps.show != this.state.show) {
-      this.toggle()
-    }
-  }
-
-  createGroup() {
-    var group = {
-      name: this.state.name,
-      download_path: this.state.download_path,
-      link: this.state.link
-    }
-    GroupActions.createGroup(group)
-    this.props.toggle()
-  }
-
-
-  handleDownloadPathChange(event) {
+  nameChange(event) {
+    var group = this.state.group
+    group.name = event.target.value
     this.setState({
-      download_path: event.target.value
+      group: group
     })
   }
 
-  handleNameChange(event) {
+  linkChange(event) {
+    var group = this.state.group
+    group.link = event.target.value
     this.setState({
-      name: event.target.value
-    })
-  }
-
-  handleLinkChange(event) {
-    this.setState({
-      link: event.target.value
+      group: group
     })
   }
 
   render() {
     return (
       <div>
-        <Modal isOpen={this.state.show} toggle={this.props.toggle}>
+        <Modal isOpen={this.props.show} toggle={this.props.toggler}>
           <ModalHeader>
             New Group
           </ModalHeader>
           <ModalBody>
             <Form>
               <FormGroup>
-                <Label for="groupName">Name</Label>
-                <Input type="text" name="name" id="groupName" value={this.state.name} onChange={this.handleNameChange}/>
-                <Label for="groupLink">RSS Link</Label>
-                <Input type="text" name="link" id="groupLink" value={this.state.link} onChange={this.handleLinkChange}/>
-                <Label for="groupDownloadPath">Download Path</Label>
-                <Input type="text" name="downloadPath" id="groupDownloadPath" value={this.state.download_path} onChange={this.handleDownloadPathChange}/>
+                <Label for="groupname">Name</Label>
+                <Input type="text" name="name" id="groupname" value={this.state.group.name} onChange={this.nameChange}/>
+                <Label for="grouplink">RSS Link</Label>
+                <Input type="text" name="link" id="grouplink" value={this.state.group.link} onChange={this.linkChange}/>
+                <Label for="groupdownloadPath">Download Path</Label>
+                <Input type="text" name="downloadPath" id="groupdownloadPath" value={this.state.group.download_path} onChange={this.downloadPathChange}/>
               </FormGroup>
             </Form>
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={this.createGroup}>Create</Button>
-            <Button color="secondary" onClick={this.props.toggle}>Cancel</Button>
+            <Button color="primary" onClick={this.create}>Create</Button>
+            <Button color="secondary" onClick={this.props.toggler}>Cancel</Button>
           </ModalFooter>
         </Modal>
       </div>

@@ -8,64 +8,50 @@ class CreateRequest extends Component {
 
   constructor() {
     super()
+    var request = {regex: "", download_path: "", name: ""}
     this.state = {
-      show: false,
-      regex: "",
-      download_path: "",
-      name: ""
+      request: request,
     }
-    this.toggle = this.toggle.bind(this)
-    this.handleRegexChange = this.handleRegexChange.bind(this)
-    this.handleNameChange = this.handleNameChange.bind(this)
-    this.handleDownloadPathChange = this.handleDownloadPathChange.bind(this)
-    this.createRequest = this.createRequest.bind(this)
+    this.regexChange = this.regexChange.bind(this)
+    this.nameChange = this.nameChange.bind(this)
+    this.downloadPathChange = this.downloadPathChange.bind(this)
+    this.create = this.create.bind(this)
   }
 
-  toggle() {
+  create() {
+    RequestActions.createRequest(this.props.group_id, this.state.request)
+    this.props.toggler()
+  }
+
+
+  nameChange(event) {
+    var request = this.state.request
+    request.name = event.target.value
     this.setState({
-      show: !this.state.show
+      request: request
     })
   }
 
-  componentWillReceiveProps(nextProps) {
-    if(nextProps.show !== this.state.show) {
-      this.toggle()
-    }
-  }
-
-  createRequest() {
-    var request = {
-      name: this.state.name,
-      regex: this.state.regex,
-      download_path: this.state.download_path,
-    }
-    RequestActions.createRequest(this.props.group_id, request)
-    this.toggle()
-  }
-
-
-  handleNameChange(event) {
+  downloadPathChange(event) {
+    var request = this.state.request
+    request.download_path = event.target.value
     this.setState({
-      name: event.target.value
+      request: request
     })
   }
 
-  handleDownloadPathChange(event) {
+  regexChange(event) {
+    var request = this.state.request
+    request.regex = event.target.value
     this.setState({
-      download_path: event.target.value
-    })
-  }
-
-  handleRegexChange(event) {
-    this.setState({
-      regex: event.target.value
+      request: request
     })
   }
 
   render() {
     return (
       <div>
-        <Modal isOpen={this.state.show} toggle={this.toggle}>
+        <Modal isOpen={this.props.show} toggle={this.props.toggler}>
           <ModalHeader>
             New Request
           </ModalHeader>
@@ -73,17 +59,17 @@ class CreateRequest extends Component {
             <Form>
               <FormGroup>
                 <Label for="requestName">Name</Label>
-                <Input type="text" name="name" id="requestName" value={this.state.name} onChange={this.handleNameChange}/>
+                <Input type="text" name="name" id="requestName" value={this.state.request.name} onChange={this.nameChange}/>
                 <Label for="requestRegex">Reqular Expression</Label>
-                <Input type="text" name="regex" id="requestRegex" value={this.state.regex} onChange={this.handleRegexChange}/>
+                <Input type="text" name="regex" id="requestRegex" value={this.state.request.regex} onChange={this.regexChange}/>
                 <Label for="requestDownloadPath">Download Path (optional)</Label>
-                <Input type="text" name="downloadPath" id="requestDownloadPath" value={this.state.download_path} onChange={this.handleDownloadPathChange}/>
+                <Input type="text" name="downloadPath" id="requestDownloadPath" value={this.state.request.download_path} onChange={this.downloadPathChange}/>
               </FormGroup>
             </Form>
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={this.createRequest}>Create</Button>
-            <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+            <Button color="primary" onClick={this.create}>Create</Button>
+            <Button color="secondary" onClick={this.props.toggler}>Cancel</Button>
           </ModalFooter>
         </Modal>
       </div>

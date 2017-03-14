@@ -11,36 +11,40 @@ class Navbar extends Component {
 
   constructor() {
     super()
-    this.state = {
-      groups: this.getGroups(),
-    };
-  }
 
-  getGroups() {
+    this.getGroups = this.getGroups.bind(this)
+
+    this.state = {
+      groups: []
+    };
     GroupActions.getGroups();
   }
 
-  componentWillMount() {
-    GroupStore.on("change", () => {
+  getGroups() {
       this.setState({
         groups: GroupStore.getGroups(),
       })
+  }
+
+  componentWillMount() {
+    GroupStore.on("change", this.getGroups)
+  }
+
+  componentWillUnmount() {
+    GroupStore.removeListener("change", this.getGroups)
+  }
+
+  listGroups() {
+    return this.state.groups.map((group) => {
+      return <GroupItem key={group.group_id} id={group.group_id} name={group.name} />
     })
   }
 
   render() {
-    if(this.state.groups === undefined) {
-      return null
-    }
-    var groups = this.state.groups.map((group) => {
-      return <GroupItem key={group.group_id} id={group.group_id} name={group.name} />
-
-    })
-
     return (
       <div>
         <Nav className="flex-column">
-          {groups}
+          {this.listGroups()}
         </Nav>
       </div>
     );

@@ -6,73 +6,57 @@ import * as GroupActions from '../actions/groupactions'
 
 class EditGroup extends Component {
 
-  constructor() {
+  constructor(props) {
     super()
+    var group = {group_id: "", name: "", link: "", download_path: ""}
     this.state = {
-      show: false,
-      group_id: "",
-      name: "",
-      link: "",
-      download_path: "",
+      group: group
     }
-    this.toggle = this.toggle.bind(this)
-    this.handleDownloadPathChange = this.handleDownloadPathChange.bind(this)
-    this.handleLinkChange = this.handleLinkChange.bind(this)
-    this.handleNameChange = this.handleNameChange.bind(this)
-    this.editGroup = this.editGroup.bind(this)
+    this.downloadPathChange = this.downloadPathChange.bind(this)
+    this.linkChange = this.linkChange.bind(this)
+    this.nameChange = this.nameChange.bind(this)
+    this.edit= this.edit.bind(this)
   }
 
-  editGroup() {
-    var group = {
-      group_id: this.state.group_id,
-      name: this.state.name,
-      link: this.state.link,
-      download_path: this.state.download_path
-    }
-    GroupActions.editGroup(group)
-    this.toggle()
+  edit() {
+    GroupActions.editGroup(this.state.group)
+    this.props.toggler()
   }
 
-  toggle() {
+  downloadPathChange(event) {
+    var group = this.state.group
+    group.download_path = event.target.value
     this.setState({
-      show: !this.state.show
+      group: group
+    })
+  }
+
+  nameChange(event) {
+    var group = this.state.group
+    group.name = event.target.value
+    this.setState({
+      group: group
+    })
+  }
+
+  linkChange(event) {
+    var group = this.state.group
+    group.link = event.target.value
+    this.setState({
+      group: group
     })
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      group_id: nextProps.group.group_id,
-      name: nextProps.group.name,
-      download_path: nextProps.group.download_path,
-      link: nextProps.group.link
-    })
-    if(nextProps.show != this.state.show) {
-      this.toggle()
-    }
-  }
-
-  handleDownloadPathChange(event) {
-    this.setState({
-      download_path: event.target.value
-    })
-  }
-
-  handleNameChange(event) {
-    this.setState({
-      name: event.target.value
-    })
-  }
-
-  handleLinkChange(event) {
-    this.setState({
-      link: event.target.value
+      group: nextProps.group
     })
   }
 
   render() {
     return (
       <div>
-        <Modal isOpen={this.state.show} toggle={this.toggle}>
+        <Modal isOpen={this.props.show} toggle={this.props.toggler}>
           <ModalHeader>
             Edit Group
           </ModalHeader>
@@ -80,17 +64,17 @@ class EditGroup extends Component {
             <Form>
               <FormGroup>
                 <Label for="editGroupName">Name</Label>
-                <Input type="text" name="editGroupName" id="editGroupName" value={this.state.name} onChange={this.handleNameChange}/>
+                <Input type="text" name="editGroupName" id="editGroupName" value={this.state.group.name} onChange={this.nameChange}/>
                 <Label for="editGroupLink">RSS Link</Label>
-                <Input type="text" name="editGrouplink" id="editGroupLink" value={this.state.link} onChange={this.handleLinkChange}/>
+                <Input type="text" name="editGrouplink" id="editGroupLink" value={this.state.group.link} onChange={this.linkChange}/>
                 <Label for="editGroupDownloadPath">Download Path</Label>
-                <Input type="text" name="editGroupdownloadPath" id="editGroupDownloadPath" value={this.state.download_path} onChange={this.handleDownloadPathChange}/>
+                <Input type="text" name="editGroupdownloadPath" id="editGroupDownloadPath" value={this.state.group.download_path} onChange={this.downloadPathChange}/>
               </FormGroup>
             </Form>
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={this.editGroup}>Submit</Button>
-            <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+            <Button color="primary" onClick={this.edit}>Submit</Button>
+            <Button color="secondary" onClick={this.props.toggler}>Cancel</Button>
           </ModalFooter>
         </Modal>
       </div>

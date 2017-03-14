@@ -1,13 +1,21 @@
 import React, { Component } from 'react';
 
+import {Row, Col} from 'reactstrap';
+
+import Helpers from '../helpers';
+
 class History extends Component {
 
   render() {
     return (
-      <div>
-        <p>{this.props.history.file}</p>
-        <p>{this.props.history.timestamp}</p>
-      </div>
+      <Row>
+        <Col sm="auto">
+        {this.props.history.file}
+        </Col>
+        <Col sm="auto">
+        {Helpers.formatTimestamp(this.props.history.timestamp)}
+      </Col>
+      </Row>
     );
   }
 }

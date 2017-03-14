@@ -9,7 +9,7 @@ class GroupItem extends Component {
   render() {
     return (
       <NavItem>
-        <NavLink tag={Link} to={"/groups/"+this.props.id}>{this.props.name}</NavLink>
+        <NavLink activeClassName="active" tag={Link} to={"/groups/"+this.props.id}>{this.props.name}</NavLink>
       </NavItem>
     );
   }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Collapse, Button } from 'reactstrap';
+import { ButtonGroup, Row, Col, ListGroupItem, Collapse, Button } from 'reactstrap';
 
 import * as HistoryActions from '../actions/historyactions';
 
@@ -18,8 +18,8 @@ class Request extends Component {
     var group_id = props.request.group_id
     var request_id = props.request.request_id
     this.state = {
-      showModal: false,
-      collapsed: false,
+      showEditModal: false,
+      showHistory: false,
       request: props.request,
       history: HistoryStore.getHistory(request_id),
     }
@@ -38,7 +38,7 @@ class Request extends Component {
 
   toggleEditModal() {
     this.setState({
-      showModal: !this.state.showModal
+      showEditModal: !this.state.showEditModal
     })
   }
 
@@ -50,7 +50,7 @@ class Request extends Component {
 
   collapseHistory() {
     this.setState({
-      collapsed: !this.state.collapsed
+      showHistory: !this.state.showHistory
     })
   }
 
@@ -74,16 +74,26 @@ class Request extends Component {
     })
     return (
       <div>
-        <EditRequest request={this.state.request} show={this.state.showModal} />
-        <strong>{this.props.request.name}</strong>
-        <Button size="sm" onClick={this.toggleEditModal}>Edit Request</Button>
-        <Button size="sm" onClick={this.deleteRequest}>Delete Request</Button>
-        <p>{this.props.request.regex}</p>
-        <p>{this.props.request.download_path}</p>
-        <Button size='sm' onClick={this.collapseHistory}>History</Button>
-        <Collapse isOpen={this.state.collapsed}>
-          {historyList}
-        </Collapse>
+        <ListGroupItem>
+          <EditRequest toggler={this.toggleEditModal} request={this.state.request} show={this.state.showEditModal} />
+          <Row size="lg">
+            <Col sm="auto"> {this.props.request.name} </Col>
+            <Col sm="auto"> {this.props.request.regex} </Col>
+            <Col sm="auto"> {this.props.request.download_path} </Col>
+            <Col sm="auto">
+              <ButtonGroup size='sm'>
+                <Button onClick={this.toggleEditModal}>Edit</Button>
+                <Button onClick={this.deleteRequest}>Delete</Button>
+                <Button onClick={this.collapseHistory}>History</Button>
+              </ButtonGroup>
+              <Row>
+                <Collapse isOpen={this.state.showHistory}>
+                  {historyList}
+                </Collapse>
+              </Row>
+            </Col>
+          </Row>
+      </ListGroupItem>
       </div>
     );
   }

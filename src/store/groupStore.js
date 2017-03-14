@@ -32,32 +32,38 @@ class GroupStore extends EventEmitter {
 
   handleActions(action) {
     switch(action.type) {
+      case "CHECK_GROUP": {
+        break
+      }
       case "CREATE_GROUP": {
-        this.groups.push(action.group)
+        this.groups.push(action.data)
         this.emit("change")
         break
       }
       case "DELETE_GROUP": {
-        this.deleteGroup(action.group.group_id)
+        this.deleteGroup(action.data.group_id)
         this.emit("change")
         break
       }
       case "GET_GROUPS": {
-        this.groups = action.groups
+        this.groups = action.data
         this.emit("change")
         break
       }
       case "GET_GROUP": {
-        this.getGroup(action.group)
+        this.getGroup(action.data)
         this.emit("change")
         break
       }
       case "EDIT_GROUP": {
-        this.editGroup(action.group)
+        this.editGroup(action.data)
         this.emit("change")
         break
       }
       default: {}
+    }
+    if(action.status != undefined) {
+      //AlertActions.alert(action.status)
     }
   }
 
