@@ -2,6 +2,8 @@ import { EventEmitter } from "events";
 
 import dispatcher from '../dispatcher'
 
+import AlertStore from './alertstore'
+
 class HistoryStore extends EventEmitter {
 
   constructor() {
@@ -44,11 +46,14 @@ class HistoryStore extends EventEmitter {
   handleActions(action) {
     switch(action.type) {
       case "GET_HISTORY": {
-        this.insertHistory(action.history)
+        this.insertHistory(action.data)
         this.emit("change")
         break
       }
       default: {}
+    }
+    if(action.status.error != "") {
+      AlertStore.setAlert(action.status.error)
     }
   }
 

@@ -1,6 +1,8 @@
 import { EventEmitter } from "events";
 
-import dispatcher from '../dispatcher'
+import dispatcher from '../dispatcher';
+
+import AlertStore from './alertstore';
 
 class GroupStore extends EventEmitter {
 
@@ -33,6 +35,7 @@ class GroupStore extends EventEmitter {
   handleActions(action) {
     switch(action.type) {
       case "CHECK_GROUP": {
+        action.status.error = "wakka?"
         break
       }
       case "CREATE_GROUP": {
@@ -62,11 +65,10 @@ class GroupStore extends EventEmitter {
       }
       default: {}
     }
-    if(action.status != undefined) {
-      //AlertActions.alert(action.status)
+    if(action.status.error != "") {
+      AlertStore.setAlert(action.status.error)
     }
   }
-
 }
 
 const groupStore = new GroupStore();

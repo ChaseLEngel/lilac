@@ -16,7 +16,7 @@ export function getGroups() {
 
 export function getGroup(id) {
   api.group(id).then((response) => {
-    dispatcher.dispatch({type: "GET_GROUP", data: response.data});
+    dispatcher.dispatch({type: "GET_GROUP", status: response.status, data: response.data});
   })
 }
 

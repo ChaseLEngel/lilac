@@ -6,30 +6,41 @@ import Header from './components/header';
 import CreateGroup from './components/creategroup';
 import Navbar from './components/navbar';
 
+import AlertStore from './store/alertstore';
+
 class App extends Component {
 
   constructor() {
     super()
     this.state = {
       showCreateGroup: false,
-      alertShow: false
+      alertShow: false,
+      alertMessage: ""
     }
     this.toggleCreateGroup = this.toggleCreateGroup.bind(this)
     this.alertDismiss = this.alertDismiss.bind(this)
-    this.alert = this.alert.bind(this)
+    this.getAlert = this.getAlert.bind(this)
   }
 
-  alert() {
+  getAlert() {
     this.setState({
+      alertMessage: AlertStore.getAlert(),
       alertShow: true
     })
-
   }
 
   alertDismiss() {
     this.setState({
       alertShow: !this.state.alertShow
     }) 
+  }
+
+  componentWillMount() {
+    AlertStore.on("change", this.getAlert)
+  }
+
+  componentWillUnmount() {
+    AlertStore.removeListener("change", this.getAlert)
   }
 
   toggleCreateGroup() {
@@ -42,7 +53,6 @@ class App extends Component {
     return (
       <div className="App">
         <Header />
-        <Button onClick={this.alert}>Alert!</Button>
         <Container fluid={true}>
           <Row>
             <Col xs="12">
@@ -53,7 +63,7 @@ class App extends Component {
                 toggle={this.alertDismiss}
                 transitionLeaveTimeout={2} 
                 color="danger">
-                  Oh No!
+                {this.state.alertMessage}
               </Alert>
             </Col>
           </Row>

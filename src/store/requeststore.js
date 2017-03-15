@@ -2,6 +2,8 @@ import { EventEmitter } from "events";
 
 import dispatcher from '../dispatcher'
 
+import AlertStore from './alertstore'
+
 class RequestStore extends EventEmitter {
 
   constructor() {
@@ -61,26 +63,29 @@ class RequestStore extends EventEmitter {
   handleActions(action) {
     switch(action.type) {
       case "GET_REQUESTS": {
-        this.insertRequests(action.requests)
+        this.insertRequests(action.data)
         this.emit("change")
         break
       }
       case "CREATE_REQUEST": {
-        this.requests.push(action.request)
+        this.requests.push(action.data)
         this.emit("change")
         break
       }
       case "DELETE_REQUEST": {
-        this.deleteRequest(action.request.request_id)
+        this.deleteRequest(action.data.request_id)
         this.emit("change")
         break
       }
       case "EDIT_REQUEST": {
-        this.editRequest(action.request)
+        this.editRequest(action.data)
         this.emit("change")
         break
       }
       default: {}
+    }
+    if(action.status.error != "") {
+      AlertStore.setAlert(action.status.error)
     }
   }
 

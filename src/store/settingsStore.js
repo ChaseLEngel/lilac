@@ -2,6 +2,8 @@ import { EventEmitter } from "events";
 
 import dispatcher from '../dispatcher'
 
+import AlertStore from './alertstore'
+
 class GroupStore extends EventEmitter {
 
   constructor() {
@@ -25,16 +27,19 @@ class GroupStore extends EventEmitter {
   handleActions(action) {
     switch(action.type) {
       case "GET_SETTINGS": {
-        this.settings.push(action.settings)
+        this.settings.push(action.data)
         this.emit("change")
         break
       }
       case "EDIT_SETTINGS": {
-        this.editSettings(action.settings)
+        this.editSettings(action.data)
         this.emit("change")
         break
       }
       default: {}
+    }
+    if(action.status.error != "") {
+      AlertStore.setAlert(action.status.error)
     }
   }
 

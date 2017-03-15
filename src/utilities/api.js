@@ -1,69 +1,91 @@
+import * as AlertActions from '../actions/alertactions'
+
+const URL = "http://localhost:8080"
+
+function contact(url, method, body) {
+  var json = JSON.stringify(body)
+  return fetch(url, {method: method, body: json})
+    .then((response) => response.json())
+    .catch((error) => {
+      AlertActions.alert("Couldn't contact server.")
+      console.error(error)
+    });
+}
+
 var api = {
-  contact(url, method, body) {
-    var json = JSON.stringify(body)
-    return fetch(url, {method: method, body: json})
-      .then((response) => response.json())
-      .catch((error) => {
-        console.error(error)
-      });
-  },
   checkGroup(group_id) {
-    var url = "http://localhost:8080/groups/"+group_id+"/check"
-    return this.contact(url, 'POST')
+    var uri = URL+"/groups/"+group_id+"/check"
+    return contact(uri, 'POST')
   },
   groups() {
-    var url = 'http://localhost:8080/groups'
-    return this.contact(url, 'GET')
+    var uri = URL+"/groups"
+    return contact(uri, 'GET')
   },
   group(group_id) {
-    var url = "http://localhost:8080/groups/"+group_id
-    return this.contact(url, 'GET')
+    var uri = URL+"/groups/"+group_id
+    return contact(uri, 'GET')
   },
   requests(group_id) {
-    var url = "http://localhost:8080/groups/"+group_id+"/requests"
-    return this.contact(url, 'GET')
+    var uri = URL+"/groups/"+group_id+"/requests"
+    return contact(uri, 'GET')
   },
   request(group_id, request_id) {
-    var url = "http://localhost:8080/groups/"+group_id+"/requests/"+request_id
-    return this.contact(url, 'GET')
+    var uri = URL+"/groups/"+group_id+"/requests/"+request_id
+    return contact(uri, 'GET')
   },
   history(group_id, request_id) {
-    var url = "http://localhost:8080/groups/"+group_id+"/requests/"+request_id+"/history"
-    return this.contact(url, 'GET')
+    var uri = URL+"/groups/"+group_id+"/requests/"+request_id+"/history"
+    return contact(uri, 'GET')
   },
   createGroup(group) {
-    var url = "http://localhost:8080/groups"
-    return this.contact(url, 'POST', group)
+    var uri = URL+"/groups"
+    return contact(uri, 'POST', group)
   },
   deleteGroup(group_id) {
-    var url = "http://localhost:8080/groups/"+group_id
-    return this.contact(url, 'DELETE')
+    var uri = URL+"/groups/"+group_id
+    return contact(uri, 'DELETE')
   },
   createRequest(group_id, request) {
-    var url = "http://localhost:8080/groups/"+group_id+"/requests"
-    return this.contact(url, 'POST', request)
+    var uri = URL+"/groups/"+group_id+"/requests"
+    return contact(uri, 'POST', request)
   },
   deleteRequest(group_id, request_id) {
-    var url = "http://localhost:8080/groups/"+group_id+"/requests/"+request_id
-    return this.contact(url, 'DELETE')
+    var uri = URL+"/groups/"+group_id+"/requests/"+request_id
+    return contact(uri, 'DELETE')
   },
   editGroup(group) {
-    var url = "http://localhost:8080/groups/"+group.group_id
-    return this.contact(url, 'PUT', group)
+    var uri = URL+"/groups/"+group.group_id
+    return contact(uri, 'PUT', group)
   },
   editRequest(request) {
-    var url = "http://localhost:8080/groups/"+request.group_id+"/requests/"+request.request_id
-    return this.contact(url, 'PUT', request)
+    var uri = URL+"/groups/"+request.group_id+"/requests/"+request.request_id
+    return contact(uri, 'PUT', request)
   },
   settings(group_id) {
-    var url = "http://localhost:8080/groups/"+group_id+"/settings"
-    return this.contact(url, 'GET')
+    var uri = URL+"/groups/"+group_id+"/settings"
+    return contact(uri, 'GET')
   },
   editSettings(settings) {
     // Backend expects integer not string for interval.
     settings.interval = parseInt(settings.interval)
-    var url = "http://localhost:8080/groups/"+settings.group_id+"/settings"
-    return this.contact(url, 'POST', settings)
+    var uri = URL+"/groups/"+settings.group_id+"/settings"
+    return contact(uri, 'POST', settings)
+  },
+  machines(group_id) {
+    var uri = URL+"/groups/"+group_id+"/machines"
+    return contact(uri, 'GET')
+  },
+  createMachine(group_id, machine) {
+    var uri = URL+"/groups/"+group_id+"/machines"
+    return contact(uri, 'POST', machine)
+  },
+  deleteMachine(machine) {
+    var uri = URL+"/groups/"+machine.group_id+"/machines/"+machine.machine_id
+    return contact(uri, 'DELETE')
+  },
+  editMachine(machine) {
+    var uri = URL+"/groups/"+machine.group_id+"/machines/"+machine.machine_id
+    return contact(uri, 'PUT', machine)
   }
 }
 
