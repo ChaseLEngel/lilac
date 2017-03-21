@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 import { Alert, Container, Row, Col, Button } from 'reactstrap';
 
 import Header from './components/header';
-import CreateGroup from './components/creategroup';
-import Navbar from './components/navbar';
+import CreateGroup from './components/group/create';
+import Navbar from './components/nav/navbar';
 
 import AlertStore from './store/alertstore';
 

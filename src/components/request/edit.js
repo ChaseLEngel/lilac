@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { Form, FormGroup, Label, Input, Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
-import * as RequestActions from '../actions/requestactions'
+import * as RequestActions from '../../actions/requestactions'
 
 class EditRequest extends Component {
 

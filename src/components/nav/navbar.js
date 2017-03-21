@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 
 import { Button, Nav, NavLink } from 'reactstrap';
 
-import GroupStore from '../store/groupStore';
-import * as GroupActions from '../actions/groupactions';
+import GroupStore from '../../store/groupStore';
+import * as GroupActions from '../../actions/groupactions';
 
 import GroupItem from './navitem';
 

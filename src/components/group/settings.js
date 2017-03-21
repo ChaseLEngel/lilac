@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 
 import { Container, Col, Row, Form, InputGroup, FormGroup, Label, Input, Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
-import * as GroupActions from '../actions/groupactions'
-import * as SettingsActions from '../actions/settingsactions'
+import * as GroupActions from '../../actions/groupactions'
+import * as SettingsActions from '../../actions/settingsactions'
 
 class SettingsModal extends Component {
 

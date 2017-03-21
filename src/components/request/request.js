@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 
 import { ButtonGroup, Row, Col, ListGroupItem, Collapse, Button } from 'reactstrap';
 
-import * as HistoryActions from '../actions/historyactions';
+import * as HistoryActions from '../../actions/historyactions';
 
-import * as RequestActions from '../actions/requestactions';
+import * as RequestActions from '../../actions/requestactions';
 
-import HistoryStore from '../store/historystore';
+import HistoryStore from '../../store/historystore';
 
-import EditRequest from './editrequest';
+import EditRequest from './edit';
 import History from './history';
 
 class Request extends Component {

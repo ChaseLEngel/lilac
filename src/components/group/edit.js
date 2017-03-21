@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { Form, FormGroup, Label, Input, Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
-import * as GroupActions from '../actions/groupactions'
+import * as GroupActions from '../../actions/groupactions'
 
 class EditGroup extends Component {
 

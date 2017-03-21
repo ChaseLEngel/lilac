@@ -75,8 +75,8 @@ var api = {
     var uri = URL+"/groups/"+group_id+"/machines"
     return contact(uri, 'GET')
   },
-  createMachine(group_id, machine) {
-    var uri = URL+"/groups/"+group_id+"/machines"
+  createMachine(machine) {
+    var uri = URL+"/groups/"+machine.group_id+"/machines"
     return contact(uri, 'POST', machine)
   },
   deleteMachine(machine) {

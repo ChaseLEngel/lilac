@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import {Row, Col} from 'reactstrap';
 
-import Helpers from '../helpers';
+import Helpers from '../../helpers';
 
 class History extends Component {
 

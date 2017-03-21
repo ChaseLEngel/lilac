@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 
 import { ButtonGroup, Button, Container, Row, Col } from 'reactstrap';
 
-import RequestList from '../components/requestlist'
+import RequestList from '../components/request/list'
+import MachineList from '../components/machine/list'
 
-import EditGroup from '../components/editgroup';
-import Settings from '../components/settings';
+import EditGroup from '../components/group/edit';
+import Settings from '../components/group/settings';
 
 import GroupStore from '../store/groupStore';
 import SettingsStore from '../store/settingsStore';
@@ -15,6 +16,7 @@ import Helpers from '../helpers';
 import * as RequestActions from '../actions/requestactions';
 import * as GroupActions from '../actions/groupactions';
 import * as SettingsActions from '../actions/settingsactions';
+import * as MachineActions from '../actions/machineactions'
 
 class Group extends Component {
 
@@ -88,6 +90,7 @@ class Group extends Component {
     this.getGroup(nextGroup_id)
     SettingsActions.getSettings(nextGroup_id)
     this.getSettings(nextGroup_id)
+    MachineActions.getMachines(nextGroup_id)
   }
 
   render() {
@@ -107,6 +110,7 @@ class Group extends Component {
         <p>Last Checked: {Helpers.formatTimestamp(this.state.group.last_checked)}</p>
         <p>RSS Link: {this.state.group.link}</p>
         <RequestList group_id={this.state.group.group_id} />
+        <MachineList group_id={this.state.group.group_id} />
       </div>
     );
   }

@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 
 import { ListGroup, Button } from 'reactstrap';
 
-import CreateRequest from '../components/createrequest';
-import Request from '../components/request';
+import CreateRequest from './create';
+import Request from './request';
 
-import RequestStore from '../store/requeststore';
+import RequestStore from '../../store/requeststore';
 
-import * as RequestActions from '../actions/requestactions';
+import * as RequestActions from '../../actions/requestactions';
 
 class RequestList extends Component {
 
