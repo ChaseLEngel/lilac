@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 
-import { Button, Nav, NavLink } from 'reactstrap';
+import { Link } from 'react-router';
+
+import { Button, Nav, NavItem, NavLink } from 'reactstrap';
 
 import GroupStore from '../../store/groupStore';
 import * as GroupActions from '../../actions/groupactions';
@@ -45,6 +47,9 @@ class Navbar extends Component {
       <div>
         <Nav className="flex-column">
           {this.listGroups()}
+          <NavItem>
+            <NavLink activeClassName="active" tag={Link} to={"/machines"}>Machines</NavLink>
+          </NavItem>
         </Nav>
       </div>
     );

@@ -11,10 +11,8 @@ class MachineStore extends EventEmitter {
     this.machines = []
   }
 
-  getMachines(group_id) {
-    return this.machines.filter(function(element) {
-      return element.group_id == group_id
-    })
+  getMachines() {
+    return this.machines
   }
 
   getMachine(machine_id) {

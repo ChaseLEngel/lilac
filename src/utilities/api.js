@@ -71,22 +71,34 @@ var api = {
     var uri = URL+"/groups/"+settings.group_id+"/settings"
     return contact(uri, 'POST', settings)
   },
-  machines(group_id) {
-    var uri = URL+"/groups/"+group_id+"/machines"
+  machines() {
+    var uri = URL+"/machines"
     return contact(uri, 'GET')
   },
-  createMachine(machine) {
-    var uri = URL+"/groups/"+machine.group_id+"/machines"
-    return contact(uri, 'POST', machine)
+  editMachine(machine) {
+    var uri = URL+"/machines/"+machine.machine_id
+    return contact(uri, 'PUT', machine)
   },
-  deleteMachine(machine) {
-    var uri = URL+"/groups/"+machine.group_id+"/machines/"+machine.machine_id
+  deleteMachine(machine_id) {
+    var uri = URL+"/machines/"+machine_id
     return contact(uri, 'DELETE')
   },
-  editMachine(machine) {
-    var uri = URL+"/groups/"+machine.group_id+"/machines/"+machine.machine_id
-    return contact(uri, 'PUT', machine)
-  }
+  createMachine(machine) {
+    var uri = URL+"/machines"
+    return contact(uri, 'POST', machine)
+  },
+  groupMachines(group) {
+    var uri = URL+"/group/"+group.group_id+"/machines"
+    return contact(uri, 'GET')
+  },
+  groupInsertMachine(group, machine) {
+    var uri = URL+"/groups/"+group.group_id+"/machines/"+machine.machine_id
+    return contact(uri, 'POST')
+  },
+  groupDeleteMachine(group, machine) {
+    var uri = URL+"/groups/"+group.group_id+"/machines/"+machine.machine_id
+    return contact(uri, 'DELETE')
+  },
 }
 
 module.exports = api;
