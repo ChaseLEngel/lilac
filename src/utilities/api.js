@@ -6,6 +6,12 @@ function contact(url, method, body) {
   var json = JSON.stringify(body)
   return fetch(url, {method: method, body: json})
     .then((response) => response.json())
+    .then((json) => {
+      if(json.status.code != 200 || json.status.error != "") {
+        AlertActions.alert(json.status.error)
+      }
+      return json
+    })
     .catch((error) => {
       AlertActions.alert("Couldn't contact server.")
       console.error(error)
@@ -91,9 +97,11 @@ var api = {
     var uri = URL+"/group/"+group.group_id+"/machines"
     return contact(uri, 'GET')
   },
-  groupInsertMachine(group, machine) {
-    var uri = URL+"/groups/"+group.group_id+"/machines/"+machine.machine_id
-    return contact(uri, 'POST')
+  groupInsertMachines(group_id, machine_ids) {
+    var uri = URL+"/groups/"+group_id+"/machines"
+    console.log("Linking " + group_id + " with:")
+    console.log(machine_ids)
+    return contact(uri, 'POST', machine_ids)
   },
   groupDeleteMachine(group, machine) {
     var uri = URL+"/groups/"+group.group_id+"/machines/"+machine.machine_id

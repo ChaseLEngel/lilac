@@ -3,9 +3,10 @@ import React, { Component } from 'react';
 import { ButtonGroup, Button, Container, Row, Col } from 'reactstrap';
 
 import RequestList from '../components/request/list'
-
 import EditGroup from '../components/group/edit';
 import Settings from '../components/group/settings';
+import ListMachinesModal from '../components/machine/listModal'
+import MachineList from '../components/machine/list'
 
 import GroupStore from '../store/groupStore';
 import SettingsStore from '../store/settingsStore';
@@ -23,6 +24,7 @@ class Group extends Component {
     this.state = {
       showEditModal: false,
       showSettingsModal: false,
+      showAddMachineModal: false,
       group: {},
       settings: {},
       requests: [],
@@ -31,6 +33,7 @@ class Group extends Component {
     this.toggleSettingsModal = this.toggleSettingsModal.bind(this)
     this.getGroup = this.getGroup.bind(this)
     this.getSettings = this.getSettings.bind(this)
+    this.toggleAddMachineModal = this.toggleAddMachineModal.bind(this)
   }
 
   toggleEditModal() {
@@ -58,7 +61,13 @@ class Group extends Component {
       group_id = this.state.group.group_id
     }
     this.setState({
-      group: GroupStore.getGroup(group_id),
+      group: GroupStore.getGroup(group_id)
+    })
+  }
+
+  toggleAddMachineModal() {
+    this.setState({
+      showAddMachineModal: !this.state.showAddMachineModal
     })
   }
 
@@ -107,6 +116,10 @@ class Group extends Component {
         <p>Last Checked: {Helpers.formatTimestamp(this.state.group.last_checked)}</p>
         <p>RSS Link: {this.state.group.link}</p>
         <RequestList group_id={this.state.group.group_id} />
+        <Row>
+          <ListMachinesModal show={this.state.showAddMachineModal} group_id={this.state.group.group_id} toggler={this.toggleAddMachineModal}/>
+          <Button onClick={this.toggleAddMachineModal}>Add Machine</Button>
+        </Row>
       </div>
     );
   }

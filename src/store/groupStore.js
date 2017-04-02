@@ -35,7 +35,6 @@ class GroupStore extends EventEmitter {
   handleActions(action) {
     switch(action.type) {
       case "CHECK_GROUP": {
-        action.status.error = "wakka?"
         break
       }
       case "CREATE_GROUP": {
@@ -64,9 +63,6 @@ class GroupStore extends EventEmitter {
         break
       }
       default: {}
-    }
-    if(action.status.error != "") {
-      AlertStore.setAlert(action.status.error)
     }
   }
 }

@@ -47,6 +47,7 @@ class Navbar extends Component {
       <div>
         <Nav className="flex-column">
           {this.listGroups()}
+          <hr />
           <NavItem>
             <NavLink activeClassName="active" tag={Link} to={"/machines"}>Machines</NavLink>
           </NavItem>
