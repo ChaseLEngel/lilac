@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 
+import { Link } from 'react-router'
+
 import { ButtonGroup, Button, Container, Row, Col } from 'reactstrap';
 
 import RequestList from '../components/request/list'
 import EditGroup from '../components/group/edit';
 import Settings from '../components/group/settings';
-import ListMachinesModal from '../components/machine/listModal'
-import MachineList from '../components/machine/list'
 
 import GroupStore from '../store/groupStore';
 import SettingsStore from '../store/settingsStore';
@@ -21,31 +21,20 @@ class Group extends Component {
 
   constructor(props) {
     super()
+    console.log(props)
     this.state = {
       showEditModal: false,
-      showSettingsModal: false,
-      showAddMachineModal: false,
       group: {},
-      settings: {},
       requests: [],
     }
     this.toggleEditModal = this.toggleEditModal.bind(this)
-    this.toggleSettingsModal = this.toggleSettingsModal.bind(this)
     this.getGroup = this.getGroup.bind(this)
-    this.getSettings = this.getSettings.bind(this)
-    this.toggleAddMachineModal = this.toggleAddMachineModal.bind(this)
   }
 
   toggleEditModal() {
     this.setState({
       showEditModal: !this.state.showEditModal
     })
-  }
-
-  toggleSettingsModal() {
-    this.setState({
-      showSettingsModal: !this.state.showSettingsModal
-    }) 
   }
 
   delete() {
@@ -65,38 +54,20 @@ class Group extends Component {
     })
   }
 
-  toggleAddMachineModal() {
-    this.setState({
-      showAddMachineModal: !this.state.showAddMachineModal
-    })
-  }
-
-  getSettings(group_id) {
-    if(group_id === undefined) {
-      group_id = this.state.group.group_id
-    }
-    this.setState({
-      settings: SettingsStore.getSettings(group_id)
-    })
-  }
-
   componentWillMount() {
     GroupStore.on("change", this.getGroup)
-    SettingsStore.on("change", this.getSettings)
   }
 
   componentWillUnmount() {
     GroupStore.removeListener("change", this.getGroup)
-    SettingsStore.removeListener("change", this.getSettings)
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log(nextProps)
     var nextGroup_id = nextProps.params.group_id
     GroupActions.getGroup(nextGroup_id)
     RequestActions.getRequests(nextGroup_id)
     this.getGroup(nextGroup_id)
-    SettingsActions.getSettings(nextGroup_id)
-    this.getSettings(nextGroup_id)
   }
 
   render() {
@@ -104,22 +75,17 @@ class Group extends Component {
       <div>
         <Row>
           <EditGroup toggler={this.toggleEditModal} group={this.state.group} show={this.state.showEditModal} />
-          <Settings toggler={this.toggleSettingsModal} settings={this.state.settings} show={this.state.showSettingsModal}/>
           <ButtonGroup>
             <Button onClick={this.toggleEditModal.bind(this)}>Edit</Button>
             <Button onClick={this.delete.bind(this)}>Delete</Button>
             <Button onClick={this.check.bind(this)}>Check</Button>
-            <Button onClick={this.toggleSettingsModal.bind(this)}>Settings</Button>
+            <Button tag={Link} to={"/groups/"+this.state.group.group_id+"/settings"}>Settings</Button>
           </ButtonGroup>
         </Row>
         <p>Download Path: {this.state.group.download_path}</p>
         <p>Last Checked: {Helpers.formatTimestamp(this.state.group.last_checked)}</p>
         <p>RSS Link: {this.state.group.link}</p>
         <RequestList group_id={this.state.group.group_id} />
-        <Row>
-          <ListMachinesModal show={this.state.showAddMachineModal} group_id={this.state.group.group_id} toggler={this.toggleAddMachineModal}/>
-          <Button onClick={this.toggleAddMachineModal}>Add Machine</Button>
-        </Row>
       </div>
     );
   }
