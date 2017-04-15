@@ -93,20 +93,14 @@ var api = {
     var uri = URL+"/machines"
     return contact(uri, 'POST', machine)
   },
-  groupMachines(group) {
-    var uri = URL+"/group/"+group.group_id+"/machines"
+  createRequestMachines(request_id, request_machines) {
+    var uri = URL+"/requests/"+request_id+"/machines"
+    return contact(uri, 'POST', request_machines)
+  },
+  requestMachines(request_id) {
+    var uri = URL+"/requests/"+request_id+"/machines"
     return contact(uri, 'GET')
-  },
-  groupInsertMachines(group_id, machine_ids) {
-    var uri = URL+"/groups/"+group_id+"/machines"
-    console.log("Linking " + group_id + " with:")
-    console.log(machine_ids)
-    return contact(uri, 'POST', machine_ids)
-  },
-  groupDeleteMachine(group, machine) {
-    var uri = URL+"/groups/"+group.group_id+"/machines/"+machine.machine_id
-    return contact(uri, 'DELETE')
-  },
+  }
 }
 
 module.exports = api;

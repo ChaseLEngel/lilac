@@ -39,6 +39,10 @@ class RequestList extends Component {
     RequestStore.on("change", this.getRequests)
   }
 
+  componentDidMount() {
+    RequestActions.getRequests(this.props.group_id)
+  }
+
   componentWillUnmount() {
     RequestStore.removeListener("change", this.getRequests)
   }
@@ -50,13 +54,12 @@ class RequestList extends Component {
   }
 
   render() {
-    var requests = this.requestsList()
     return (
       <div>
-        <Button onClick={this.toggleCreateRequest}>New Request</Button>
+        <Button color="primary" onClick={this.toggleCreateRequest}>New Request</Button>
         <CreateRequest toggler={this.toggleCreateRequest} show={this.state.showCreateRequest} group_id={this.props.group_id}/>
         <ListGroup>
-          {requests}
+          {this.requestsList()}
         </ListGroup>
       </div>
     )

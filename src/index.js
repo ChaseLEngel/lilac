@@ -14,7 +14,7 @@ ReactDOM.render(
     <Route path="/" component={App}>
       <Route path="/groups/:group_id" component={Group} />
       <Route path="/groups/:group_id/settings" component={Settings} />
-      <Route path="/requests/:group_id/machines" component={RequestMachines} />
+      <Route path="/requests/:request_id/machines" component={RequestMachines} />
       <Route path="/machines" component={Machines} />
     </Route>
   </Router>,

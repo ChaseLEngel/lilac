@@ -30,6 +30,7 @@ class Settings extends Component {
 
   edit() {
     SettingsActions.editSettings(this.state.settings)
+    browserHistory.push("/groups/"+this.state.group_id)
   }
 
   intervalChange(event) {
@@ -62,24 +63,40 @@ class Settings extends Component {
 
   render() {
     return (
-      <div>
-        <h3>Group Settings</h3>
         <Form>
+        <h3>Group Settings</h3>
           <FormGroup>
             <Row>
               <Col sm="auto">
-                <Label for="interval">Check Interval</Label>
+                <Label>Check Interval</Label>
               </Col>
               <Col sm="auto">
                 <Input type="number" value={this.state.settings.interval} onChange={this.intervalChange}/>
               </Col>
             </Row>
             <Row>
-              <Col sm="11">
-                <Label for="autotransfer">Auto Transfer</Label>
+              <Col sm="auto">
+                <Label>Auto Transfer</Label>
               </Col>
               <Col sm="auto">
                 <Input type="checkbox" checked={this.state.settings.auto_transfer} onChange={this.autoTransferChange}/>
+              </Col>
+            </Row>
+            <legend>Notifications</legend>
+            <Row>
+              <Col lg="auto">
+                <Label>Telegram API Token</Label>
+              </Col>
+              <Col lg="auto">
+                <Input type="text" value="123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11" />
+              </Col>
+            </Row>
+            <Row>
+              <Col lg="auto">
+                <Label>Telegram Message</Label>
+              </Col>
+              <Col lg="auto">
+                <Input type="textarea" value="Lilac downloaded %file%" />
               </Col>
             </Row>
             <Row>
@@ -87,7 +104,6 @@ class Settings extends Component {
             </Row>
           </FormGroup>
         </Form>
-      </div>
     )
   }
 }

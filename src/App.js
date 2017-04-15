@@ -57,11 +57,8 @@ class App extends Component {
           <Row>
             <Col xs="12">
               <Alert 
-                transitionAppearTimeout={5}
-                transitionEnterTimeout={5}
                 isOpen={this.state.alertShow}
                 toggle={this.alertDismiss}
-                transitionLeaveTimeout={2} 
                 color="danger">
                 {this.state.alertMessage}
               </Alert>
@@ -73,9 +70,7 @@ class App extends Component {
             <CreateGroup toggler={this.toggleCreateGroup} show={this.state.showCreateGroup}/>
             <Button onClick={this.toggleCreateGroup}>New Group</Button>
           </Col>
-          <Col lg="auto">
           {this.props.children}
-        </Col>
           </Row>
         </Container>
       </div>

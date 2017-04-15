@@ -11,15 +11,24 @@ class AlertStore extends EventEmitter {
 
   setAlert(message) {
       this.alert = message
-      this.emit("change")
   }
 
   getAlert() {
     return this.alert
   }
 
+  handleActions(action) {
+    console.log(action)
+    switch(action.type) {
+      case "ALERT": {
+        this.setAlert(action.data)
+        this.emit("change")
+      }
+    }
+  }
+
 }
 
 const alertStore = new AlertStore();
-
+dispatcher.register(alertStore.handleActions.bind(alertStore));
 export default alertStore;

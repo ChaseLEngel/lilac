@@ -2,8 +2,6 @@ import { EventEmitter } from "events";
 
 import dispatcher from '../dispatcher';
 
-import AlertStore from './alertstore';
-
 class GroupStore extends EventEmitter {
 
   constructor() {

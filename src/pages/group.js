@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Link } from 'react-router'
+import { Link, browserHistory } from 'react-router'
 
 import { ButtonGroup, Button, Container, Row, Col } from 'reactstrap';
 
@@ -21,10 +21,9 @@ class Group extends Component {
 
   constructor(props) {
     super()
-    console.log(props)
     this.state = {
       showEditModal: false,
-      group: {},
+      group: GroupStore.getGroup(props.params.group_id),
       requests: [],
     }
     this.toggleEditModal = this.toggleEditModal.bind(this)
@@ -39,6 +38,7 @@ class Group extends Component {
 
   delete() {
     GroupActions.deleteGroup(this.state.group.group_id)
+    browserHistory.replace("/")
   }
 
   check() {
@@ -63,7 +63,6 @@ class Group extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps)
     var nextGroup_id = nextProps.params.group_id
     GroupActions.getGroup(nextGroup_id)
     RequestActions.getRequests(nextGroup_id)
