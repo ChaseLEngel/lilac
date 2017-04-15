@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import { Link } from 'react-router'
+
 import { ButtonGroup, Row, Col, ListGroupItem, Collapse, Button } from 'reactstrap';
 
 import * as HistoryActions from '../../actions/historyactions';
@@ -85,6 +87,7 @@ class Request extends Component {
                 <Button onClick={this.toggleEditModal}>Edit</Button>
                 <Button onClick={this.deleteRequest}>Delete</Button>
                 <Button onClick={this.collapseHistory}>History</Button>
+                <Button tag={Link} to={"/requests/"+this.state.request.request_id+"/machines"}>Machines</Button>
               </ButtonGroup>
               <Row>
                 <Collapse isOpen={this.state.showHistory}>

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 
+import { Link, browserHistory } from 'react-router'
+
 import { ButtonGroup, Button, Container, Row, Col } from 'reactstrap';
 
 import RequestList from '../components/request/list'
-
 import EditGroup from '../components/group/edit';
 import Settings from '../components/group/settings';
 
@@ -22,15 +23,11 @@ class Group extends Component {
     super()
     this.state = {
       showEditModal: false,
-      showSettingsModal: false,
-      group: {},
-      settings: {},
+      group: GroupStore.getGroup(props.params.group_id),
       requests: [],
     }
     this.toggleEditModal = this.toggleEditModal.bind(this)
-    this.toggleSettingsModal = this.toggleSettingsModal.bind(this)
     this.getGroup = this.getGroup.bind(this)
-    this.getSettings = this.getSettings.bind(this)
   }
 
   toggleEditModal() {
@@ -39,14 +36,9 @@ class Group extends Component {
     })
   }
 
-  toggleSettingsModal() {
-    this.setState({
-      showSettingsModal: !this.state.showSettingsModal
-    }) 
-  }
-
   delete() {
     GroupActions.deleteGroup(this.state.group.group_id)
+    browserHistory.replace("/")
   }
 
   check() {
@@ -58,27 +50,16 @@ class Group extends Component {
       group_id = this.state.group.group_id
     }
     this.setState({
-      group: GroupStore.getGroup(group_id),
-    })
-  }
-
-  getSettings(group_id) {
-    if(group_id === undefined) {
-      group_id = this.state.group.group_id
-    }
-    this.setState({
-      settings: SettingsStore.getSettings(group_id)
+      group: GroupStore.getGroup(group_id)
     })
   }
 
   componentWillMount() {
     GroupStore.on("change", this.getGroup)
-    SettingsStore.on("change", this.getSettings)
   }
 
   componentWillUnmount() {
     GroupStore.removeListener("change", this.getGroup)
-    SettingsStore.removeListener("change", this.getSettings)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -86,8 +67,6 @@ class Group extends Component {
     GroupActions.getGroup(nextGroup_id)
     RequestActions.getRequests(nextGroup_id)
     this.getGroup(nextGroup_id)
-    SettingsActions.getSettings(nextGroup_id)
-    this.getSettings(nextGroup_id)
   }
 
   render() {
@@ -95,12 +74,11 @@ class Group extends Component {
       <div>
         <Row>
           <EditGroup toggler={this.toggleEditModal} group={this.state.group} show={this.state.showEditModal} />
-          <Settings toggler={this.toggleSettingsModal} settings={this.state.settings} show={this.state.showSettingsModal}/>
           <ButtonGroup>
             <Button onClick={this.toggleEditModal.bind(this)}>Edit</Button>
             <Button onClick={this.delete.bind(this)}>Delete</Button>
             <Button onClick={this.check.bind(this)}>Check</Button>
-            <Button onClick={this.toggleSettingsModal.bind(this)}>Settings</Button>
+            <Button tag={Link} to={"/groups/"+this.state.group.group_id+"/settings"}>Settings</Button>
           </ButtonGroup>
         </Row>
         <p>Download Path: {this.state.group.download_path}</p>

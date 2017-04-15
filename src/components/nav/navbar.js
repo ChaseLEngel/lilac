@@ -19,13 +19,13 @@ class Navbar extends Component {
     this.state = {
       groups: []
     };
-    GroupActions.getGroups();
   }
 
   getGroups() {
-      this.setState({
-        groups: GroupStore.getGroups(),
-      })
+    console.log(GroupStore.getGroups())
+    this.setState({
+      groups: GroupStore.getGroups(),
+    })
   }
 
   componentWillMount() {
@@ -34,6 +34,10 @@ class Navbar extends Component {
 
   componentWillUnmount() {
     GroupStore.removeListener("change", this.getGroups)
+  }
+
+  componentDidMount() {
+    GroupActions.getGroups();
   }
 
   listGroups() {
@@ -47,6 +51,7 @@ class Navbar extends Component {
       <div>
         <Nav className="flex-column">
           {this.listGroups()}
+          <hr />
           <NavItem>
             <NavLink activeClassName="active" tag={Link} to={"/machines"}>Machines</NavLink>
           </NavItem>

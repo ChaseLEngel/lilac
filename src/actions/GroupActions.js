@@ -62,11 +62,11 @@ export function editGroup(group) {
   })
 }
 
-export function insertMachine(group, machine) {
-  api.groupInsertMachine(group).then((response) => {
+export function insertMachines(group, machines) {
+  api.groupInsertMachines(group, machines).then((response) => {
     dispatcher.dispatch({
-      type: "INSERT_MACHINE",
-      status: response.status,
+      type: "INSERT_MACHINES",
+      status: machines,
       data: {}
     });
   })

@@ -52,9 +52,6 @@ class HistoryStore extends EventEmitter {
       }
       default: {}
     }
-    if(action.status.error != "") {
-      AlertStore.setAlert(action.status.error)
-    }
   }
 
 }

@@ -10,19 +10,26 @@ class CreateRequest extends Component {
     super()
     var request = {regex: "", download_path: "", name: ""}
     this.state = {
-      request: request,
+      request: request
     }
     this.regexChange = this.regexChange.bind(this)
     this.nameChange = this.nameChange.bind(this)
     this.downloadPathChange = this.downloadPathChange.bind(this)
     this.create = this.create.bind(this)
+    this.closeModal = this.closeModal.bind(this)
   }
 
   create() {
     RequestActions.createRequest(this.props.group_id, this.state.request)
-    this.props.toggler()
+    this.closeModal()
   }
 
+  closeModal() {
+    this.setState({
+      request: []
+    })
+    this.props.toggler()
+  }
 
   nameChange(event) {
     var request = this.state.request
@@ -69,7 +76,7 @@ class CreateRequest extends Component {
           </ModalBody>
           <ModalFooter>
             <Button color="primary" onClick={this.create}>Create</Button>
-            <Button color="secondary" onClick={this.props.toggler}>Cancel</Button>
+            <Button color="secondary" onClick={this.closeModal}>Cancel</Button>
           </ModalFooter>
         </Modal>
       </div>

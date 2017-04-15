@@ -6,6 +6,12 @@ function contact(url, method, body) {
   var json = JSON.stringify(body)
   return fetch(url, {method: method, body: json})
     .then((response) => response.json())
+    .then((json) => {
+      if(json.status.code != 200 || json.status.error != "") {
+        AlertActions.alert(json.status.error)
+      }
+      return json
+    })
     .catch((error) => {
       AlertActions.alert("Couldn't contact server.")
       console.error(error)
@@ -87,18 +93,14 @@ var api = {
     var uri = URL+"/machines"
     return contact(uri, 'POST', machine)
   },
-  groupMachines(group) {
-    var uri = URL+"/group/"+group.group_id+"/machines"
+  createRequestMachines(request_id, request_machines) {
+    var uri = URL+"/requests/"+request_id+"/machines"
+    return contact(uri, 'POST', request_machines)
+  },
+  requestMachines(request_id) {
+    var uri = URL+"/requests/"+request_id+"/machines"
     return contact(uri, 'GET')
-  },
-  groupInsertMachine(group, machine) {
-    var uri = URL+"/groups/"+group.group_id+"/machines/"+machine.machine_id
-    return contact(uri, 'POST')
-  },
-  groupDeleteMachine(group, machine) {
-    var uri = URL+"/groups/"+group.group_id+"/machines/"+machine.machine_id
-    return contact(uri, 'DELETE')
-  },
+  }
 }
 
 module.exports = api;
