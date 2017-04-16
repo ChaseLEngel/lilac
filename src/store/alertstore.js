@@ -18,7 +18,6 @@ class AlertStore extends EventEmitter {
   }
 
   handleActions(action) {
-    console.log(action)
     switch(action.type) {
       case "ALERT": {
         this.setAlert(action.data)

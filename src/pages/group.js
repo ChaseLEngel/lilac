@@ -23,29 +23,27 @@ class Group extends Component {
     super()
     this.state = {
       showEditModal: false,
-      group: GroupStore.getGroup(props.params.group_id),
+      group: GroupStore.getGroup(props.params.group_id) || {},
       requests: [],
     }
-    this.toggleEditModal = this.toggleEditModal.bind(this)
-    this.getGroup = this.getGroup.bind(this)
   }
 
-  toggleEditModal() {
+  toggleEditModal = () => {
     this.setState({
       showEditModal: !this.state.showEditModal
     })
   }
 
-  delete() {
+  delete = () => {
     GroupActions.deleteGroup(this.state.group.group_id)
     browserHistory.replace("/")
   }
 
-  check() {
+  check = () => {
     GroupActions.check(this.state.group.group_id)
   }
 
-  getGroup(group_id) {
+  getGroup = (group_id) => {
     if(group_id === undefined) {
       group_id = this.state.group.group_id
     }
@@ -75,9 +73,9 @@ class Group extends Component {
         <Row>
           <EditGroup toggler={this.toggleEditModal} group={this.state.group} show={this.state.showEditModal} />
           <ButtonGroup>
-            <Button onClick={this.toggleEditModal.bind(this)}>Edit</Button>
-            <Button onClick={this.delete.bind(this)}>Delete</Button>
-            <Button onClick={this.check.bind(this)}>Check</Button>
+            <Button onClick={this.toggleEditModal}>Edit</Button>
+            <Button onClick={this.delete}>Delete</Button>
+            <Button onClick={this.check}>Check</Button>
             <Button tag={Link} to={"/groups/"+this.state.group.group_id+"/settings"}>Settings</Button>
           </ButtonGroup>
         </Row>

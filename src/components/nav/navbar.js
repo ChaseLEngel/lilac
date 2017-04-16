@@ -22,7 +22,6 @@ class Navbar extends Component {
   }
 
   getGroups() {
-    console.log(GroupStore.getGroups())
     this.setState({
       groups: GroupStore.getGroups(),
     })
