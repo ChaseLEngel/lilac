@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { Link } from 'react-router';
 
-import { Button, Nav, NavItem, NavLink } from 'reactstrap';
+import { Button, Nav, NavItem, NavLink} from 'reactstrap';
 
 import GroupStore from '../../store/groupStore';
 import * as GroupActions from '../../actions/groupactions';
@@ -41,23 +41,42 @@ class Navbar extends Component {
 
   listGroups() {
     return this.state.groups.map((group) => {
-      return <GroupItem key={group.group_id} id={group.group_id} name={group.name} />
-    })
+      return (
+        <NavItem key={group.group_id} style={navbarItemStyle}>
+          <NavLink style={navBarTextStyle} tag={Link} to={"/groups/"+group.group_id}>{group.name}</NavLink>
+        </NavItem>
+      )})
   }
 
   render() {
     return (
-      <div>
-        <Nav className="flex-column">
-          {this.listGroups()}
-          <hr />
-          <NavItem>
-            <NavLink activeClassName="active" tag={Link} to={"/machines"}>Machines</NavLink>
-          </NavItem>
-        </Nav>
-      </div>
+      <Nav style={navbarStyle}>
+        {this.listGroups()}
+        <hr />
+        <NavItem style={navbarItemStyle}>
+          <NavLink style={navBarTextStyle} tag={Link} to={"/machines"}>Machines</NavLink>
+        </NavItem>
+        <NavItem style={navbarItemStyle}>
+          <NavLink style={navBarTextStyle} tag={Link} to={"/login"}>Log out</NavLink>
+        </NavItem>
+      </Nav>
     );
   }
 }
+
+const navbarItemStyle = {
+  padding: "10px",
+}
+
+const navBarTextStyle = {
+  color: "#8DA7BE"
+}
+
+const navbarStyle = {
+  flexDirection: 'column',
+  background: "#587291",
+  height: '100%',
+  minHeight: '100%'
+};
 
 export default Navbar;

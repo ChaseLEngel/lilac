@@ -6,7 +6,7 @@ import MachineStore from '../store/machinestore'
 
 import CreateMachineModal from '../components/machine/createModal'
 
-import { Button, ListGroup, Row } from 'reactstrap'
+import { Button, ListGroup, ListGroupItem} from 'reactstrap'
 
 import * as MachineActions from '../actions/machineactions'
 
@@ -57,11 +57,8 @@ class Machines extends Component {
     var machines = this.machineList()
     return (
       <div>
-        <Row>
-          <CreateMachineModal toggler={this.toggleCreateModal} show={this.state.showCreateModal} />
-          <h3>Machines</h3>
-          <Button color="primary" size="sm" onClick={this.toggleCreateModal}>New</Button>
-        </Row>
+        <CreateMachineModal toggler={this.toggleCreateModal} show={this.state.showCreateModal} />
+        <Button color="primary" size="sm" onClick={this.toggleCreateModal}>New</Button>
         <ListGroup>
           {machines}
         </ListGroup>

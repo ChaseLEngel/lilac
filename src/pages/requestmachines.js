@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import {  InputGroup, InputGroupButton, Row, Col, Button, Input } from 'reactstrap'
+import {  Label, InputGroup, InputGroupAddon, InputGroupButton, Row, Col, Button, Input } from 'reactstrap'
 
 import { browserHistory } from 'react-router'
 
@@ -14,7 +14,6 @@ class RequestMachines extends Component {
 
   constructor(props) {
     super()
-    console.log(RequestMachineStore.getRequestMachines(props.params.request_id))
     this.state = {
       machines: MachineStore.getMachines(),
       selected: RequestMachineStore.getRequestMachines(props.params.request_id)
@@ -50,7 +49,6 @@ class RequestMachines extends Component {
   }
 
   find(id) {
-    console.log(this.state.selected)
     return this.state.selected.find(function(element) {
       return element.machine_id == id
     })
@@ -124,14 +122,14 @@ class RequestMachines extends Component {
     return this.state.machines.map((machine) => {
       return (
         <InputGroup>
-          <InputGroupButton>
-            <Button
-              color="primary"
-              name={machine.machine_id}
-              active={this.active(machine.machine_id)}
-              onClick={this.select}>{machine.host}
-            </Button>
-          </InputGroupButton>
+          <InputGroupAddon>
+            <Col sm={{size: '8'}}>
+              <Label>{machine.host}</Label>
+            </Col>
+            <Col sm={{size: '1'}}>
+              <Input addon type="checkbox" color="primary" name={machine.machine_id} active={this.active(machine.machine_id)} onClick={this.select} />
+            </Col>
+          </InputGroupAddon>
           <Input 
             name={machine.machine_id}
             disabled={!this.active(machine.machine_id)}
@@ -140,9 +138,6 @@ class RequestMachines extends Component {
             value={this.getValue(machine.machine_id)}
             onChange={this.destinationChange}
           />
-          <InputGroupButton>
-            <Button disabled={!this.active(machine.machine_id)}>History</Button>
-          </InputGroupButton>
         </InputGroup>
       )})
   }

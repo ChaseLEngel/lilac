@@ -33,18 +33,14 @@ class MachineItem extends Component {
     return (
       <div>
         <EditMachineModal toggler={this.toggleEditModal} machine={this.state.machine} show={this.state.showEditModal}/>
-        <ListGroupItem>
-          <Row size="lg">
-            <Col sm="auto"> {this.state.machine.host} </Col>
-            <Col sm="auto"> {this.state.machine.port} </Col>
-            <Col sm="auto"> {this.state.machine.user} </Col>
-            <Col sm="auto">
-              <ButtonGroup size="sm">
-                <Button onClick={this.toggleEditModal}>Edit</Button>
-                <Button onClick={this.delete}>Delete</Button>
-              </ButtonGroup>
-            </Col>
-          </Row>
+        <ListGroupItem className="justify-content-between">
+          <div>{this.state.machine.host}</div>
+          <div>{this.state.machine.port}</div>
+          <div>{this.state.machine.user}</div>
+          <ButtonGroup size="sm">
+            <Button onClick={this.toggleEditModal}>Edit</Button>
+            <Button onClick={this.delete}>Delete</Button>
+          </ButtonGroup>
         </ListGroupItem>
       </div>
     )

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { Row, Col, Form, FormGroup, Label, Input, Button } from 'reactstrap'
+import { Card, CardHeader, CardBlock, Row, Col, Form, FormGroup, Label, Input, Button } from 'reactstrap'
 
 import { browserHistory } from 'react-router'
 
@@ -16,24 +16,20 @@ class Settings extends Component {
       group_id: props.params.group_id,
       settings: []
     }
-    this.getSettings = this.getSettings.bind(this)
-    this.edit = this.edit.bind(this)
-    this.intervalChange = this.intervalChange.bind(this)
-    this.autoTransferChange = this.autoTransferChange.bind(this)
   }
 
-  getSettings() {
+  getSettings = () => {
     this.setState({
       settings: SettingsStore.getSettings(this.state.group_id)
     })
   }
 
-  edit() {
+  edit = () => {
     SettingsActions.editSettings(this.state.settings)
     browserHistory.push("/groups/"+this.state.group_id)
   }
 
-  intervalChange(event) {
+  intervalChange = (event) => {
     var settings = this.state.settings
     settings.interval = event.target.value
     this.setState({
@@ -41,7 +37,7 @@ class Settings extends Component {
     })
   }
 
-  autoTransferChange(event) {
+  autoTransferChange = (event) => {
     var settings = this.state.settings
     settings.auto_transfer = !settings.auto_transfer
     this.setState({
@@ -63,49 +59,68 @@ class Settings extends Component {
 
   render() {
     return (
-        <Form>
-        <h3>Group Settings</h3>
-          <FormGroup>
+      <div>
+        <Card>
+          <CardHeader>Group Settings</CardHeader>
+          <CardBlock>
             <Row>
-              <Col sm="auto">
-                <Label>Check Interval</Label>
+              <Col>
+                <label>Check Interval</label>
               </Col>
-              <Col sm="auto">
+              <Col lg={{ size: 'auto', offset: 1 }}>
                 <Input type="number" value={this.state.settings.interval} onChange={this.intervalChange}/>
               </Col>
             </Row>
             <Row>
-              <Col sm="auto">
-                <Label>Auto Transfer</Label>
+              <Col>
+                <label>Auto Transfer</label>
               </Col>
-              <Col sm="auto">
+              <Col lg={{ size: 'auto', offset: 1 }}>
                 <Input type="checkbox" checked={this.state.settings.auto_transfer} onChange={this.autoTransferChange}/>
               </Col>
             </Row>
-            <legend>Notifications</legend>
+          </CardBlock>
+        </Card>
+
+        <Card>
+          <CardHeader>Telegram</CardHeader>
+          <CardBlock>
             <Row>
-              <Col lg="auto">
-                <Label>Telegram API Token</Label>
+              <Col>
+                <label>API Token</label>
               </Col>
-              <Col lg="auto">
-                <Input type="text" value="123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11" />
+              <Col lg={{ size: '5', offset: 1 }}>
+                <Input type="text" value="" />
               </Col>
             </Row>
             <Row>
-              <Col lg="auto">
-                <Label>Telegram Message</Label>
+              <Col>
+                <label>Chat ID</label>
               </Col>
-              <Col lg="auto">
-                <Input type="textarea" value="Lilac downloaded %file%" />
+              <Col lg={{ size: '3', offset: 1 }}>
+                <Input type="text" value="" />
               </Col>
             </Row>
             <Row>
-             <Button color="primary" onClick={this.edit}>Save</Button>
+              <Col>
+                <label>Message</label>
+              </Col>
+              <Col lg={{ size: '7', offset: 1 }}>
+                <Input type="textarea" value="" />
+              </Col>
             </Row>
-          </FormGroup>
-        </Form>
+          </CardBlock>
+        </Card>
+        <Button color="primary" onClick={this.edit}>Save</Button>
+     </div>
     )
   }
+}
+
+const formStyle = {
+}
+
+const formRowStyle = {
 }
 
 export default Settings

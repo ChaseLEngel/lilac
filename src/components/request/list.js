@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { ListGroup, Button } from 'reactstrap';
+import { ListGroup, Card, CardBlock, CardHeader, CardTitle, Button } from 'reactstrap';
 
 import CreateRequest from './create';
 import Request from './request';
@@ -17,18 +17,15 @@ class RequestList extends Component {
       requests: [],
       showCreateRequest: false
     }
-
-    this.getRequests = this.getRequests.bind(this)
-    this.toggleCreateRequest = this.toggleCreateRequest.bind(this)
   }
 
-  toggleCreateRequest() {
+  toggleCreateRequest = () => {
     this.setState({
       showCreateRequest: !this.state.showCreateRequest
     })  
   }
 
-  getRequests() {
+  getRequests = () => {
     var group_id = this.props.group_id
     this.setState({
       requests: RequestStore.getRequests(group_id)
@@ -56,11 +53,20 @@ class RequestList extends Component {
   render() {
     return (
       <div>
-        <Button color="primary" onClick={this.toggleCreateRequest}>New Request</Button>
         <CreateRequest toggler={this.toggleCreateRequest} show={this.state.showCreateRequest} group_id={this.props.group_id}/>
-        <ListGroup>
-          {this.requestsList()}
-        </ListGroup>
+        <Card>
+          <CardBlock>
+            <CardHeader>
+              Requests 
+              <Button size="sm" color="primary" onClick={this.toggleCreateRequest}>+</Button>
+            </CardHeader>
+          </CardBlock>
+          <CardBlock>
+            <ListGroup>
+            {this.requestsList()}
+            </ListGroup>
+          </CardBlock>
+        </Card>
       </div>
     )
   }

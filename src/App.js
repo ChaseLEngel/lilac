@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 
-import { Alert, Container, Row, Col, Button } from 'reactstrap';
+import { Alert, Button } from 'reactstrap';
 
 import Header from './components/header';
 import CreateGroup from './components/group/create';
 import Navbar from './components/nav/navbar';
 
 import AlertStore from './store/alertstore';
+
+import styles from './styles/index.css'
 
 class App extends Component {
 
@@ -51,31 +53,41 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
+      <div className="App" style={styles}>
         <Header />
-        <Container fluid={true}>
-          <Row>
-            <Col xs="12">
-              <Alert 
-                isOpen={this.state.alertShow}
-                toggle={this.alertDismiss}
-                color="danger">
-                {this.state.alertMessage}
-              </Alert>
-            </Col>
-          </Row>
-        <Row>
-          <Col lg="2">
+        <Alert 
+          isOpen={this.state.alertShow}
+          toggle={this.alertDismiss}
+          style={alertStyle}
+          color="danger">
+          {this.state.alertMessage}
+        </Alert>
+        <div style={containerStyle}>
             <Navbar />
-            <CreateGroup toggler={this.toggleCreateGroup} show={this.state.showCreateGroup}/>
-            <Button onClick={this.toggleCreateGroup}>New Group</Button>
-          </Col>
-          {this.props.children}
-          </Row>
-        </Container>
+            <div style={contentStyle}>
+              {this.props.children}
+            </div>
+        </div>
       </div>
     );
   }
 }
+
+const contentStyle = {
+  flex: 3,
+}
+
+const alertStyle = {
+  marginBottom: 0
+}
+
+const sidebarStyle = {
+  flex: 1,
+}
+
+const containerStyle = {
+  display: "flex",
+  height: '100%'
+};
 
 export default App;

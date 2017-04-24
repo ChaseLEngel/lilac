@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { Link, browserHistory } from 'react-router'
 
-import { ButtonGroup, Button, Container, Row, Col } from 'reactstrap';
+import { ButtonGroup, Button } from 'reactstrap';
 
 import RequestList from '../components/request/list'
 import EditGroup from '../components/group/edit';
@@ -70,22 +70,27 @@ class Group extends Component {
   render() {
     return (
       <div>
-        <Row>
+        <div style={jumbotronStyle} className='jumbotron'>
+          <h4>{this.state.group.name}</h4>
           <EditGroup toggler={this.toggleEditModal} group={this.state.group} show={this.state.showEditModal} />
-          <ButtonGroup>
+          <div>
             <Button onClick={this.toggleEditModal}>Edit</Button>
             <Button onClick={this.delete}>Delete</Button>
             <Button onClick={this.check}>Check</Button>
             <Button tag={Link} to={"/groups/"+this.state.group.group_id+"/settings"}>Settings</Button>
-          </ButtonGroup>
-        </Row>
-        <p>Download Path: {this.state.group.download_path}</p>
-        <p>Last Checked: {Helpers.formatTimestamp(this.state.group.last_checked)}</p>
-        <p>RSS Link: {this.state.group.link}</p>
+          </div>
+          <p>Download Path: {this.state.group.download_path}</p>
+          <p>Last Checked: {Helpers.formatTimestamp(this.state.group.last_checked)}</p>
+          <p>RSS Link: {this.state.group.link}</p>
+        </div>
         <RequestList group_id={this.state.group.group_id} />
       </div>
     );
   }
+}
+
+const jumbotronStyle = {
+  marginBottom: 0
 }
 
 export default Group;

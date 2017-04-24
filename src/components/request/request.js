@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { Link } from 'react-router'
 
-import { ButtonGroup, Row, Col, ListGroupItem, Collapse, Button } from 'reactstrap';
+import { ButtonGroup, ListGroupItem, Collapse, Button } from 'reactstrap';
 
 import * as HistoryActions from '../../actions/historyactions';
 
@@ -56,6 +56,10 @@ class Request extends Component {
     })
   }
 
+  historyDisabled = () => {
+    return this.state.history.length == 0 ? true : false
+  }
+
   componentWillMount() {
     HistoryStore.on("change", this.getHistory)
   }
@@ -76,27 +80,22 @@ class Request extends Component {
     })
     return (
       <div>
-        <ListGroupItem>
           <EditRequest toggler={this.toggleEditModal} request={this.state.request} show={this.state.showEditModal} />
-          <Row size="lg">
-            <Col sm="auto"> {this.props.request.name} </Col>
-            <Col sm="auto"> {this.props.request.regex} </Col>
-            <Col sm="auto"> {this.props.request.download_path} </Col>
-            <Col sm="auto">
+          <ListGroupItem className="justify-content-between">
+            <div>{this.props.request.name}</div>
+            <div>{this.props.request.regex}</div>
+            <div>{this.props.request.download_path}</div>
+            
               <ButtonGroup size='sm'>
                 <Button onClick={this.toggleEditModal}>Edit</Button>
                 <Button onClick={this.deleteRequest}>Delete</Button>
-                <Button onClick={this.collapseHistory}>History</Button>
+                <Button disabled={this.historyDisabled()} onClick={this.collapseHistory}>History</Button>
                 <Button tag={Link} to={"/requests/"+this.state.request.request_id+"/machines"}>Machines</Button>
               </ButtonGroup>
-              <Row>
                 <Collapse isOpen={this.state.showHistory}>
                   {historyList}
                 </Collapse>
-              </Row>
-            </Col>
-          </Row>
-      </ListGroupItem>
+              </ListGroupItem>
       </div>
     );
   }
