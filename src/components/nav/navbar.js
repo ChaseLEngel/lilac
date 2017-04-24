@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, button } from 'react';
 
 import { Link } from 'react-router';
 
@@ -8,6 +8,7 @@ import GroupStore from '../../store/groupStore';
 import * as GroupActions from '../../actions/groupactions';
 
 import GroupItem from './navitem';
+import CreateGroup from '../group/create'
 
 class Navbar extends Component {
 
@@ -17,13 +18,20 @@ class Navbar extends Component {
     this.getGroups = this.getGroups.bind(this)
 
     this.state = {
-      groups: []
+      groups: [],
+			showCreateGroup: false
     };
   }
 
   getGroups() {
     this.setState({
       groups: GroupStore.getGroups(),
+    })
+  }
+
+  toggleCreateGroup = () => {
+    this.setState({
+      showCreateGroup: !this.state.showCreateGroup
     })
   }
 
@@ -51,6 +59,11 @@ class Navbar extends Component {
   render() {
     return (
       <Nav style={navbarStyle}>
+        <NavItem style={navbarHeaderStyle}>
+          Groups
+          <button style={addGroupStyle} onClick={this.toggleCreateGroup} >+</button>
+          <CreateGroup toggler={this.toggleCreateGroup} show={this.state.showCreateGroup}/>
+        </NavItem>
         {this.listGroups()}
         <hr />
         <NavItem style={navbarItemStyle}>
@@ -64,8 +77,27 @@ class Navbar extends Component {
   }
 }
 
+const navbarHeaderStyle = {
+  paddingBottom: '0px',
+  padding: "10px",
+  fontSize: '120%',
+  color: '#97AFC3',
+  textDecorationLine: 'none !important'
+}
+
+const addGroupStyle = {
+  paddingLeft: '10px',
+  fontSize: '120%',
+  color: '#97AFC3',
+	background: 'none',
+	border: 'none',
+	fontWeight: 'bold',
+	cursor: 'pointer',
+}
+
 const navbarItemStyle = {
   padding: "10px",
+  paddingTop: '0px'
 }
 
 const navBarTextStyle = {

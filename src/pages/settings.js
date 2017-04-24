@@ -45,6 +45,30 @@ class Settings extends Component {
     })
   }
 
+  apiTokenChange = (event) => {
+    var settings = this.state.settings
+    settings.telegram_api_token = event.target.value
+    this.setState({
+      settings: settings
+    })
+  }
+
+  chatIdChange = (event) => {
+    var settings = this.state.settings
+    settings.telegram_chat_id = event.target.value
+    this.setState({
+      settings: settings
+    })
+  }
+
+  telegramMessageChange = (event) => {
+    var settings = this.state.settings
+    settings.telegram_message = event.target.value
+    this.setState({
+      settings: settings
+    })
+  }
+
   componentWillMount() {
     SettingsStore.on("change", this.getSettings)
   }
@@ -90,7 +114,7 @@ class Settings extends Component {
                 <label>API Token</label>
               </Col>
               <Col lg={{ size: '5', offset: 1 }}>
-                <Input type="text" value="" />
+                <Input type="text" value={this.state.settings.telegram_api_token} onChange={this.apiTokenChange}/>
               </Col>
             </Row>
             <Row>
@@ -98,7 +122,7 @@ class Settings extends Component {
                 <label>Chat ID</label>
               </Col>
               <Col lg={{ size: '3', offset: 1 }}>
-                <Input type="text" value="" />
+                <Input type="text" value={this.state.settings.telegram_chat_id} onChange={this.chatIdChange}/>
               </Col>
             </Row>
             <Row>
@@ -106,7 +130,7 @@ class Settings extends Component {
                 <label>Message</label>
               </Col>
               <Col lg={{ size: '7', offset: 1 }}>
-                <Input type="textarea" value="" />
+                <Input type="textarea" value={this.state.settings.telegram_message} onChange={this.telegramMessageChange}/>
               </Col>
             </Row>
           </CardBlock>
