@@ -35,15 +35,6 @@ class Machines extends Component {
     })
   }
 
-  componentWillMount() {
-    MachineStore.on("change", this.getMachines)
-    MachineActions.getMachines()
-  }
-
-  componentWillUnmount() {
-    MachineStore.removeListener("change", this.getMachines)
-  }
-
   machineList() {
     return this.state.machines.map((machine) => {
       return <MachineItem
@@ -51,6 +42,15 @@ class Machines extends Component {
         machine={machine}
         />
     })
+  }
+
+  componentWillMount() {
+    MachineStore.on("change", this.getMachines)
+    MachineActions.getMachines()
+  }
+
+  componentWillUnmount() {
+    MachineStore.removeListener("change", this.getMachines)
   }
 
   render() {

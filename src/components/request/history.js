@@ -6,8 +6,7 @@ import Helpers from '../../helpers';
 
 class History extends Component {
 
-  sendToMachines() {
-   
+  deleteHistory() {
   }
 
   render() {
@@ -21,7 +20,7 @@ class History extends Component {
             {Helpers.formatTimestamp(this.props.history.timestamp)}
           </div>
           <div>
-            <Button>Send to machines</Button>
+            <Button size='sm' onClick={this.deleteHistory}>Delete</Button>
           </div>
         </ListGroupItem>
       </ListGroup>

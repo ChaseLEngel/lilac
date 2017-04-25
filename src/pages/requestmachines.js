@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import {  Label, InputGroup, InputGroupAddon, InputGroupButton, Row, Col, Button, Input } from 'reactstrap'
+import {  Card, CardBlock, Label, InputGroup, InputGroupAddon, InputGroupButton, Row, Col, Button, Input } from 'reactstrap'
 
 import { browserHistory } from 'react-router'
 
@@ -123,12 +123,14 @@ class RequestMachines extends Component {
       return (
         <InputGroup>
           <InputGroupAddon>
-            <Col sm={{size: '8'}}>
-              <Label>{machine.host}</Label>
-            </Col>
-            <Col sm={{size: '1'}}>
-              <Input addon type="checkbox" color="primary" name={machine.machine_id} active={this.active(machine.machine_id)} onClick={this.select} />
-            </Col>
+            <Row>
+              <Col sm={{size: 'auto'}}>
+                <Label>{machine.host}</Label>
+              </Col>
+              <Col style={{paddingLeft: '0px'}} lg={{size: 'auto'}}>
+                <Input addon type="checkbox" name={machine.machine_id} active={this.active(machine.machine_id)} onClick={this.select} />
+              </Col>
+            </Row>
           </InputGroupAddon>
           <Input 
             name={machine.machine_id}
@@ -144,10 +146,14 @@ class RequestMachines extends Component {
   
   render() {
     return (
-      <div>
-        {this.machineList()}
-        <Button color="primary" onClick={this.save}>Save</Button>
-      </div>
+      <Card>
+        <CardBlock>
+          {this.machineList()}
+        </CardBlock>
+        <CardBlock>
+          <Button style={{justifyContent: 'right'}} color="secondary" onClick={this.save}>Save</Button>
+        </CardBlock>
+      </Card>
     )
   }
 }

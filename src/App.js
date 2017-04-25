@@ -19,36 +19,33 @@ class App extends Component {
       alertShow: false,
       alertMessage: ""
     }
-    this.toggleCreateGroup = this.toggleCreateGroup.bind(this)
-    this.alertDismiss = this.alertDismiss.bind(this)
-    this.getAlert = this.getAlert.bind(this)
   }
 
-  getAlert() {
+  getAlert = () => {
     this.setState({
       alertMessage: AlertStore.getAlert(),
       alertShow: true
     })
   }
 
-  alertDismiss() {
+  alertDismiss = () => {
     this.setState({
       alertShow: !this.state.alertShow
     }) 
   }
 
-  componentWillMount() {
+  toggleCreateGroup = () => {
+    this.setState({
+      showCreateGroup: !this.state.showCreateGroup
+    })
+  }
+
+  componentWillMount () {
     AlertStore.on("change", this.getAlert)
   }
 
   componentWillUnmount() {
     AlertStore.removeListener("change", this.getAlert)
-  }
-
-  toggleCreateGroup() {
-    this.setState({
-      showCreateGroup: !this.state.showCreateGroup
-    })
   }
 
   render() {

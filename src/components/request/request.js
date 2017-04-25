@@ -53,6 +53,10 @@ class Request extends Component {
     })
   }
 
+  historyCollapsed = () => {
+    return this.state.showHistory
+  }
+
   historyDisabled = () => {
     return this.state.history.length == 0 ? true : false
   }
@@ -89,7 +93,7 @@ class Request extends Component {
           <ButtonGroup size='sm'>
             <Button onClick={this.toggleEditModal}>Edit</Button>
             <Button onClick={this.deleteRequest}>Delete</Button>
-            <Button disabled={this.historyDisabled()} onClick={this.collapseHistory}>History</Button>
+            <Button active={this.historyCollapsed()} disabled={this.historyDisabled()} onClick={this.collapseHistory}>History</Button>
             <Button disabled={this.machineDisabled()}tag={Link} to={"/requests/"+this.state.request.request_id+"/machines"}>Machines</Button>
           </ButtonGroup>
         </ListGroupItem>
