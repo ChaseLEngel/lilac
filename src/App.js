@@ -53,7 +53,7 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App" style={styles}>
+      <div className="App" style={appStyle}>
         <Header />
         <Alert 
           isOpen={this.state.alertShow}
@@ -71,6 +71,10 @@ class App extends Component {
       </div>
     );
   }
+}
+
+const appStyle = {
+  height: '100%'
 }
 
 const contentStyle = {

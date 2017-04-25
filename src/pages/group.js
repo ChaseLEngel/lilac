@@ -73,12 +73,12 @@ class Group extends Component {
         <div style={jumbotronStyle} className='jumbotron'>
           <h4>{this.state.group.name}</h4>
           <EditGroup toggler={this.toggleEditModal} group={this.state.group} show={this.state.showEditModal} />
-          <div>
+          <ButtonGroup>
             <Button onClick={this.toggleEditModal}>Edit</Button>
             <Button onClick={this.delete}>Delete</Button>
             <Button onClick={this.check}>Check</Button>
             <Button tag={Link} to={"/groups/"+this.state.group.group_id+"/settings"}>Settings</Button>
-          </div>
+          </ButtonGroup>
           <p>Download Path: {this.state.group.download_path}</p>
           <p>Last Checked: {Helpers.formatTimestamp(this.state.group.last_checked)}</p>
           <p>RSS Link: {this.state.group.link}</p>
@@ -90,7 +90,9 @@ class Group extends Component {
 }
 
 const jumbotronStyle = {
-  marginBottom: 0
+  marginBottom: 0,
+  paddingTop: '2rem',
+  paddingBottom: '1rem',
 }
 
 export default Group;

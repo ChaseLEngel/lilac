@@ -2,16 +2,17 @@ import React, { Component } from 'react';
 
 import { Link } from 'react-router'
 
-import { ButtonGroup, ListGroupItem, Collapse, Button } from 'reactstrap';
+import { ButtonGroup, ListGroupItem, Collapse, Button } from 'reactstrap'
 
-import * as HistoryActions from '../../actions/historyactions';
+import * as HistoryActions from '../../actions/historyactions'
+import * as RequestActions from '../../actions/requestactions'
+import * as MachineActions from '../../actions/machineactions'
 
-import * as RequestActions from '../../actions/requestactions';
+import HistoryStore from '../../store/historystore'
+import MachineStore from '../../store/machinestore'
 
-import HistoryStore from '../../store/historystore';
-
-import EditRequest from './edit';
-import History from './history';
+import EditRequest from './edit'
+import History from './history'
 
 class Request extends Component {
 
@@ -25,32 +26,28 @@ class Request extends Component {
       request: props.request,
       history: HistoryStore.getHistory(request_id),
     }
-    this.collapseHistory = this.collapseHistory.bind(this)
-    this.getHistory = this.getHistory.bind(this)
-    this.deleteRequest = this.deleteRequest.bind(this)
-    this.toggleEditModal = this.toggleEditModal.bind(this)
   }
 
-  getHistory() {
+  getHistory = () => {
     var request_id = this.state.request.request_id
     this.setState({
       history: HistoryStore.getHistory(request_id)
     })
   }
 
-  toggleEditModal() {
+  toggleEditModal = () => {
     this.setState({
       showEditModal: !this.state.showEditModal
     })
   }
 
-  deleteRequest() {
+  deleteRequest = () => {
     var group_id = this.state.request.group_id
     var request_id = this.state.request.request_id
     RequestActions.deleteRequest(group_id, request_id)
   }
 
-  collapseHistory() {
+  collapseHistory = () => {
     this.setState({
       showHistory: !this.state.showHistory
     })
@@ -58,6 +55,10 @@ class Request extends Component {
 
   historyDisabled = () => {
     return this.state.history.length == 0 ? true : false
+  }
+
+  machineDisabled = () => {
+    return MachineStore.getMachines().length == 0 ? true : false
   }
 
   componentWillMount() {
@@ -72,6 +73,7 @@ class Request extends Component {
     var group_id = this.state.request.group_id
     var request_id = this.state.request.request_id
     HistoryActions.getHistory(group_id, request_id)
+    MachineActions.getMachines()
   }
 
   render() {
@@ -80,22 +82,20 @@ class Request extends Component {
     })
     return (
       <div>
-          <EditRequest toggler={this.toggleEditModal} request={this.state.request} show={this.state.showEditModal} />
-          <ListGroupItem className="justify-content-between">
-            <div>{this.props.request.name}</div>
-            <div>{this.props.request.regex}</div>
-            <div>{this.props.request.download_path}</div>
-            
-              <ButtonGroup size='sm'>
-                <Button onClick={this.toggleEditModal}>Edit</Button>
-                <Button onClick={this.deleteRequest}>Delete</Button>
-                <Button disabled={this.historyDisabled()} onClick={this.collapseHistory}>History</Button>
-                <Button tag={Link} to={"/requests/"+this.state.request.request_id+"/machines"}>Machines</Button>
-              </ButtonGroup>
-                <Collapse isOpen={this.state.showHistory}>
-                  {historyList}
-                </Collapse>
-              </ListGroupItem>
+        <EditRequest toggler={this.toggleEditModal} request={this.state.request} show={this.state.showEditModal} />
+        <ListGroupItem className="justify-content-between">
+          <div>{this.props.request.regex}</div>
+          <div>{this.props.request.download_path}</div>
+          <ButtonGroup size='sm'>
+            <Button onClick={this.toggleEditModal}>Edit</Button>
+            <Button onClick={this.deleteRequest}>Delete</Button>
+            <Button disabled={this.historyDisabled()} onClick={this.collapseHistory}>History</Button>
+            <Button disabled={this.machineDisabled()}tag={Link} to={"/requests/"+this.state.request.request_id+"/machines"}>Machines</Button>
+          </ButtonGroup>
+        </ListGroupItem>
+          <Collapse isOpen={this.state.showHistory}>
+            {historyList}
+          </Collapse>
       </div>
     );
   }

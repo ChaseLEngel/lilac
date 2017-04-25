@@ -100,6 +100,10 @@ var api = {
   requestMachines(request_id) {
     var uri = URL+"/requests/"+request_id+"/machines"
     return contact(uri, 'GET')
+  },
+  transfer(file) {
+    var uri = URL+"/transfer"
+    return contact(uri, 'POST', {file: file})
   }
 }
 

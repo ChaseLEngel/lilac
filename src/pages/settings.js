@@ -135,7 +135,7 @@ class Settings extends Component {
             </Row>
           </CardBlock>
         </Card>
-        <Button color="primary" onClick={this.edit}>Save</Button>
+        <Button color="secondary" onClick={this.edit}>Save</Button>
      </div>
     )
   }

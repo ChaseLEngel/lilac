@@ -58,7 +58,7 @@ class RequestList extends Component {
           <CardBlock>
             <CardHeader>
               Requests 
-              <Button size="sm" color="primary" onClick={this.toggleCreateRequest}>+</Button>
+              <Button size="sm" color="secondary" onClick={this.toggleCreateRequest}>New</Button>
             </CardHeader>
           </CardBlock>
           <CardBlock>

@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 
+import { Card, CardBlock, CardHeader, Button, ListGroup, ListGroupItem} from 'reactstrap'
+
 import MachineItem from '../components/machine/item'
 
 import MachineStore from '../store/machinestore'
 
 import CreateMachineModal from '../components/machine/createModal'
-
-import { Button, ListGroup, ListGroupItem} from 'reactstrap'
 
 import * as MachineActions from '../actions/machineactions'
 
@@ -56,13 +56,18 @@ class Machines extends Component {
   render() {
     var machines = this.machineList()
     return (
-      <div>
-        <CreateMachineModal toggler={this.toggleCreateModal} show={this.state.showCreateModal} />
-        <Button color="primary" size="sm" onClick={this.toggleCreateModal}>New</Button>
-        <ListGroup>
-          {machines}
-        </ListGroup>
-      </div>
+      <Card>
+          <CreateMachineModal toggler={this.toggleCreateModal} show={this.state.showCreateModal} />
+        <CardHeader>
+          Machines
+          <Button color="secondary" size="sm" onClick={this.toggleCreateModal}>New</Button>
+        </CardHeader>
+        <CardBlock>
+          <ListGroup>
+            {machines}
+          </ListGroup>
+        </CardBlock>
+      </Card>
     )
   }
 }

@@ -29,7 +29,7 @@ class Login extends Component {
         </Row>
         <Row>
           <Col>
-            <Button color='primary' onClick={this.login}>Login</Button>
+            <Button color='secondary' onClick={this.login}>Login</Button>
           </Col>
         </Row>
       </div>
