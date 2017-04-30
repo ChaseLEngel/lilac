@@ -11,3 +11,13 @@ export function getHistory(group_id, request_id) {
     });
   })
 }
+
+export function deleteHistory(group_id, request_id, history_id) {
+  api.deleteHistory(group_id, request_id, history_id).then((response) => {
+    dispatcher.dispatch({
+      type: "DELETE_HISTORY",
+      status: response.status,
+      data: response.data
+    });
+  })
+}

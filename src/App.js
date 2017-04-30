@@ -51,19 +51,18 @@ class App extends Component {
   render() {
     return (
       <div className="App" style={appStyle}>
-        <Header />
-        <Alert 
-          isOpen={this.state.alertShow}
-          toggle={this.alertDismiss}
-          style={alertStyle}
-          color="danger">
-          {this.state.alertMessage}
-        </Alert>
         <div style={containerStyle}>
-            <Navbar />
-            <div style={contentStyle}>
-              {this.props.children}
-            </div>
+          <Navbar />
+          <div style={contentStyle}>
+            <Alert 
+              isOpen={this.state.alertShow}
+              toggle={this.alertDismiss}
+              style={alertStyle}
+              color="danger">
+              {this.state.alertMessage}
+            </Alert>
+            {this.props.children}
+          </div>
         </div>
       </div>
     );

@@ -1,21 +1,21 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
 import { Link, browserHistory } from 'react-router'
 
-import { ButtonGroup, Button } from 'reactstrap';
+import { ButtonGroup, Button } from 'reactstrap'
 
 import RequestList from '../components/request/list'
-import EditGroup from '../components/group/edit';
-import Settings from '../components/group/settings';
+import EditGroup from '../components/group/edit'
+import Settings from '../components/group/settings'
 
-import GroupStore from '../store/groupStore';
-import SettingsStore from '../store/settingsStore';
+import GroupStore from '../store/groupStore'
+import SettingsStore from '../store/settingsStore'
 
-import Helpers from '../helpers';
+import Helpers from '../helpers'
 
-import * as RequestActions from '../actions/requestactions';
-import * as GroupActions from '../actions/groupactions';
-import * as SettingsActions from '../actions/settingsactions';
+import * as RequestActions from '../actions/requestactions'
+import * as GroupActions from '../actions/groupactions'
+import * as SettingsActions from '../actions/settingsactions'
 
 class Group extends Component {
 
@@ -81,12 +81,16 @@ class Group extends Component {
           </ButtonGroup>
           <p>Download Path: {this.state.group.download_path}</p>
           <p>Last Checked: {Helpers.formatTimestamp(this.state.group.last_checked)}</p>
-          <p>RSS Link: {this.state.group.link}</p>
+          <p>RSS Link: <a style={linkStyle} href={this.state.group.link}>{this.state.group.link}</a></p>
         </div>
         <RequestList group_id={this.state.group.group_id} />
       </div>
     );
   }
+}
+
+const linkStyle = {
+  color: 'black'
 }
 
 const jumbotronStyle = {

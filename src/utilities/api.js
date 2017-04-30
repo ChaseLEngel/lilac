@@ -43,6 +43,10 @@ var api = {
     var uri = URL+"/groups/"+group_id+"/requests/"+request_id+"/history"
     return contact(uri, 'GET')
   },
+  deleteHistory(group_id, request_id, history_id) {
+    var uri = URL+"/groups/"+group_id+"/requests/"+request_id+"/history/"+history_id
+    return contact(uri, 'DELETE')
+  },
   createGroup(group) {
     var uri = URL+"/groups"
     return contact(uri, 'POST', group)

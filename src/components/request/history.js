@@ -1,12 +1,22 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
-import {ListGroup, ListGroupItem, Row, Col, Button} from 'reactstrap';
+import {ListGroup, ListGroupItem, Row, Col, Button} from 'reactstrap'
 
-import Helpers from '../../helpers';
+import Helpers from '../../helpers'
+
+import RequestStore from '../../store/requeststore'
+
+import * as HistoryActions from '../../actions/historyactions'
 
 class History extends Component {
 
-  deleteHistory() {
+  deleteHistory = () => {
+    var group_id = RequestStore.getRequest(this.props.history.request_id).group_id
+    HistoryActions.deleteHistory(
+      group_id,
+      this.props.history.request_id,
+      this.props.history.match_history_id
+    )
   }
 
   render() {

@@ -18,18 +18,9 @@ class RequestMachines extends Component {
       machines: MachineStore.getMachines(),
       selected: RequestMachineStore.getRequestMachines(props.params.request_id)
     }
-    this.getMachines = this.getMachines.bind(this)
-    this.getRequestMachines = this.getRequestMachines.bind(this)
-    this.select = this.select.bind(this)
-    this.find = this.find.bind(this)
-    this.machineList = this.machineList.bind(this)
-    this.save = this.save.bind(this)
-    this.destinationChange = this.destinationChange.bind(this)
-    this.delete = this.delete.bind(this)
-    this.getValue = this.getValue.bind(this)
   }
 
-  destinationChange(event) {
+  destinationChange = (event) => {
     var id = event.target.name
     var destination = event.target.value
 
@@ -43,24 +34,24 @@ class RequestMachines extends Component {
     })
   }
 
-  save() {
+  save = () => {
     RequestMachineActions.createRequestMachines(this.props.params.request_id, this.state.selected)
     browserHistory.goBack()
   }
 
-  find(id) {
+  find = (id) => {
     return this.state.selected.find(function(element) {
       return element.machine_id == id
     })
   }
 
-  delete(id) {
+  delete = (id) => {
     return this.state.selected.filter(function(element) {
       return element.machine_id != id
     })
   }
 
-  select(event) {
+  select = (event) => {
     var id = event.target.name
     var selected = this.state.selected
     if(this.find(id) === undefined) {
@@ -76,26 +67,26 @@ class RequestMachines extends Component {
     })
   }
 
-  getMachines() {
+  getMachines = () => {
     this.setState({
       machines: MachineStore.getMachines()
     })
   }
 
-  getRequestMachines() {
+  getRequestMachines = () => {
     this.setState({
       selected: RequestMachineStore.getRequestMachines(this.props.params.request_id)
     })
   }
 
-  active(id) {
+  active = (id) => {
     if(this.find(id) === undefined) {
       return false
     }
     return true
   }
 
-  getValue(id) {
+  getValue = (id) => {
     var selected = this.find(id)
     if(selected === undefined) {
       return ""
@@ -118,7 +109,7 @@ class RequestMachines extends Component {
     RequestMachineActions.getRequestMachines(this.props.params.request_id)
   }
 
-  machineList() {
+  machineList = () => {
     return this.state.machines.map((machine) => {
       return (
         <InputGroup>

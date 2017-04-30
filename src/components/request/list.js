@@ -52,22 +52,20 @@ class RequestList extends Component {
 
   render() {
     return (
-      <div>
+      <Card>
         <CreateRequest toggler={this.toggleCreateRequest} show={this.state.showCreateRequest} group_id={this.props.group_id}/>
-        <Card>
-          <CardBlock>
-            <CardHeader>
-              Requests 
-              <Button size="sm" color="secondary" onClick={this.toggleCreateRequest}>New</Button>
-            </CardHeader>
-          </CardBlock>
-          <CardBlock>
-            <ListGroup>
+        <CardBlock style={{paddingBottom: '0px'}}>
+          <CardHeader>
+            Requests 
+            <Button size="sm" color="secondary" onClick={this.toggleCreateRequest}>New</Button>
+          </CardHeader>
+        </CardBlock>
+        <CardBlock style={{paddingTop: '0px'}}>
+          <ListGroup>
             {this.requestsList()}
-            </ListGroup>
-          </CardBlock>
-        </Card>
-      </div>
+          </ListGroup>
+        </CardBlock>
+      </Card>
     )
   }
 

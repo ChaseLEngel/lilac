@@ -18,24 +18,21 @@ class Machines extends Component {
       machines: [],
       showCreateModal: false
     }
-    this.getMachines = this.getMachines.bind(this)
-    this.machineList = this.machineList.bind(this)
-    this.toggleCreateModal = this.toggleCreateModal.bind(this)
   }
 
-  toggleCreateModal() {
+  toggleCreateModal = () => {
     this.setState({
       showCreateModal: !this.state.showCreateModal
     })
   }
 
-  getMachines() {
+  getMachines = () => {
     this.setState({
       machines: MachineStore.getMachines()
     })
   }
 
-  machineList() {
+  machineList = () => {
     return this.state.machines.map((machine) => {
       return <MachineItem
         key={machine.machine_id}

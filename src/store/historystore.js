@@ -43,10 +43,21 @@ class HistoryStore extends EventEmitter {
     return history
   }
 
+  deleteHistory(match_history_id) {
+    this.history = this.history.filter(function(element) {
+      return element.match_history_id != match_history_id
+    })
+  }
+
   handleActions(action) {
     switch(action.type) {
       case "GET_HISTORY": {
         this.insertHistory(action.data)
+        this.emit("change")
+        break
+      }
+      case "DELETE_HISTORY": {
+        this.deleteHistory(action.data.match_history_id)
         this.emit("change")
         break
       }
