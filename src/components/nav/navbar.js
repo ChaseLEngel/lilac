@@ -7,7 +7,6 @@ import { Button, Nav, NavItem, NavLink} from 'reactstrap';
 import GroupStore from '../../store/groupStore';
 import * as GroupActions from '../../actions/groupactions';
 
-import GroupItem from './navitem';
 import CreateGroup from '../group/create'
 
 class Navbar extends Component {
@@ -19,7 +18,7 @@ class Navbar extends Component {
 
     this.state = {
       groups: [],
-			showCreateGroup: false
+      showCreateGroup: false
     };
   }
 
@@ -89,10 +88,10 @@ const addGroupStyle = {
   paddingLeft: '10px',
   fontSize: '120%',
   color: '#97AFC3',
-	background: 'none',
-	border: 'none',
-	fontWeight: 'bold',
-	cursor: 'pointer',
+  background: 'none',
+  border: 'none',
+  fontWeight: 'bold',
+  cursor: 'pointer',
 }
 
 const navbarItemStyle = {

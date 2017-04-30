@@ -46,7 +46,8 @@ const ListGroupStyle = {
 
 const ListGroupItemStyle = {
   flex: 1,
-  justifyContent: 'space-between'
+  justifyContent: 'space-between',
+  background: '#FCFCFC'
 }
 
 export default History;
