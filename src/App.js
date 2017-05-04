@@ -1,12 +1,17 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
-import { Alert, Button } from 'reactstrap';
+import { Alert, Button } from 'reactstrap'
 
-import Header from './components/header';
-import CreateGroup from './components/group/create';
-import Navbar from './components/nav/navbar';
+import { browserHistory } from 'react-router'
 
-import AlertStore from './store/alertstore';
+import Header from './components/header'
+import CreateGroup from './components/group/create'
+import Navbar from './components/nav/navbar'
+
+import * as MachineActions from './actions/machineactions'
+
+import AlertStore from './store/alertstore'
+import GroupStore from './store/groupStore'
 
 import styles from './styles/index.css'
 
@@ -40,8 +45,21 @@ class App extends Component {
     })
   }
 
+  loadGroup = () => {
+    var groups = GroupStore.getGroups()
+    if(groups === []) {
+      return
+    }
+    browserHistory.push('/groups/' + groups[0].group_id)
+  }
+
   componentWillMount () {
     AlertStore.on("change", this.getAlert)
+  }
+
+  componentDidMount() {
+    MachineActions.getMachines()
+    this.loadGroup()
   }
 
   componentWillUnmount() {
@@ -54,7 +72,7 @@ class App extends Component {
         <div style={containerStyle}>
           <Navbar />
           <div style={contentStyle}>
-            <Alert 
+            <Alert
               isOpen={this.state.alertShow}
               toggle={this.alertDismiss}
               style={alertStyle}

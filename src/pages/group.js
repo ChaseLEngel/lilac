@@ -62,7 +62,6 @@ class Group extends Component {
 
   componentWillReceiveProps(nextProps) {
     var nextGroup_id = nextProps.params.group_id
-    GroupActions.getGroup(nextGroup_id)
     RequestActions.getRequests(nextGroup_id)
     this.getGroup(nextGroup_id)
   }
@@ -81,7 +80,7 @@ class Group extends Component {
           </ButtonGroup>
           <p>Download Path: {this.state.group.download_path}</p>
           <p>Last Checked: {Helpers.formatTimestamp(this.state.group.last_checked)}</p>
-          <p>RSS Link: <a style={linkStyle} href={this.state.group.link}>{this.state.group.link}</a></p>
+          <p>RSS Link: <a style={linkStyle} href={this.state.group.link} target="_blank">{this.state.group.link}</a></p>
         </div>
         <RequestList group_id={this.state.group.group_id} />
       </div>

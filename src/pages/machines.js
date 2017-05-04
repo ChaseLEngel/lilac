@@ -8,14 +8,12 @@ import MachineStore from '../store/machinestore'
 
 import CreateMachineModal from '../components/machine/createModal'
 
-import * as MachineActions from '../actions/machineactions'
-
 class Machines extends Component {
 
   constructor() {
     super()
     this.state = {
-      machines: [],
+      machines: MachineStore.getMachines(),
       showCreateModal: false
     }
   }
@@ -43,7 +41,6 @@ class Machines extends Component {
 
   componentWillMount() {
     MachineStore.on("change", this.getMachines)
-    MachineActions.getMachines()
   }
 
   componentWillUnmount() {

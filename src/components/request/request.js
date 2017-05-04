@@ -6,7 +6,6 @@ import { ButtonGroup, ListGroupItem, Collapse, Button } from 'reactstrap'
 
 import * as HistoryActions from '../../actions/historyactions'
 import * as RequestActions from '../../actions/requestactions'
-import * as MachineActions from '../../actions/machineactions'
 
 import HistoryStore from '../../store/historystore'
 import MachineStore from '../../store/machinestore'
@@ -77,7 +76,6 @@ class Request extends Component {
     var group_id = this.state.request.group_id
     var request_id = this.state.request.request_id
     HistoryActions.getHistory(group_id, request_id)
-    MachineActions.getMachines()
   }
 
   render() {
