@@ -12,18 +12,21 @@ class CreateGroup extends Component {
     this.state = {
       group: group
     }
-    this.downloadPathChange = this.downloadPathChange.bind(this)
-    this.linkChange = this.linkChange.bind(this)
-    this.nameChange = this.nameChange.bind(this)
-    this.create = this.create.bind(this)
   }
 
-  create() {
-    GroupActions.createGroup(this.state.group)
+  closeModal = () => {
+    this.setState({
+      group: {name: "", link: "", download_path: ""}
+    })
     this.props.toggler()
   }
 
-  downloadPathChange(event) {
+  create = () => {
+    GroupActions.createGroup(this.state.group)
+    this.closeModal()
+  }
+
+  downloadPathChange = (event) => {
     var group = this.state.group
     group.download_path = event.target.value
     this.setState({
@@ -31,7 +34,7 @@ class CreateGroup extends Component {
     })
   }
 
-  nameChange(event) {
+  nameChange = (event) => {
     var group = this.state.group
     group.name = event.target.value
     this.setState({
@@ -39,7 +42,7 @@ class CreateGroup extends Component {
     })
   }
 
-  linkChange(event) {
+  linkChange = (event) => {
     var group = this.state.group
     group.link = event.target.value
     this.setState({
@@ -50,7 +53,7 @@ class CreateGroup extends Component {
   render() {
     return (
       <div>
-        <Modal isOpen={this.props.show} toggle={this.props.toggler}>
+        <Modal isOpen={this.props.show} toggle={this.closeModal}>
           <ModalHeader>
             New Group
           </ModalHeader>
@@ -68,7 +71,7 @@ class CreateGroup extends Component {
           </ModalBody>
           <ModalFooter>
             <Button color="primary" onClick={this.create}>Create</Button>
-            <Button color="secondary" onClick={this.props.toggler}>Cancel</Button>
+            <Button color="secondary" onClick={this.closeModal}>Cancel</Button>
           </ModalFooter>
         </Modal>
       </div>

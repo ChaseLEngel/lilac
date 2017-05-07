@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import {  Card, CardBlock, Label, InputGroup, InputGroupAddon, InputGroupButton, Row, Col, Button, Input } from 'reactstrap'
+import {  Card, CardBlock, Label, InputGroup, InputGroupAddon, Row, Col, Button, Input } from 'reactstrap'
 
 import { browserHistory } from 'react-router'
 
@@ -80,6 +80,7 @@ class RequestMachines extends Component {
   }
 
   active = (id) => {
+    console.log(this.state.selected)
     if(this.find(id) === undefined) {
       return false
     }
@@ -112,14 +113,14 @@ class RequestMachines extends Component {
   machineList = () => {
     return this.state.machines.map((machine) => {
       return (
-        <InputGroup>
+        <InputGroup key={machine.machine_id}>
           <InputGroupAddon>
             <Row>
               <Col sm={{size: 'auto'}}>
                 <Label>{machine.host}</Label>
               </Col>
               <Col style={{paddingLeft: '0px'}} lg={{size: 'auto'}}>
-                <Input addon type="checkbox" name={machine.machine_id} active={this.active(machine.machine_id)} onClick={this.select} />
+                <Input addon type="checkbox" name={machine.machine_id} checked={this.active(machine.machine_id)} onClick={this.select} />
               </Col>
             </Row>
           </InputGroupAddon>

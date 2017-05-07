@@ -2,7 +2,22 @@ import React, { Component } from 'react';
 
 import { browserHistory } from 'react-router';
 
-import { Card, CardHeader, CardBlock, Row, Col, Input, Label, Button } from 'reactstrap'
+import { Row, Col, Input, Button } from 'reactstrap'
+
+const h1Style = {
+  marginBottom: '-15px',
+}
+
+const LoginStyle = {
+  overflow: 'hidden',
+  position: 'absolute',
+  width: '100%',
+  height: '50%',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  flexDirection: 'column',
+}
 
 class Login extends Component {
   login = () => {
@@ -35,21 +50,6 @@ class Login extends Component {
       </div>
     );
   }
-}
-
-const h1Style = {
-  marginBottom: '-15px',
-}
-
-const LoginStyle = {
-  overflow: 'hidden',
-  position: 'absolute',
-  width: '100%',
-  height: '50%',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  flexDirection: 'column',
 }
 
 export default Login;

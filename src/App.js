@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
 
-import { Alert, Button } from 'reactstrap'
+import { Alert } from 'reactstrap'
 
 import { browserHistory } from 'react-router'
 
-import Header from './components/header'
-import CreateGroup from './components/group/create'
 import Navbar from './components/nav/navbar'
 
 import * as MachineActions from './actions/machineactions'
@@ -14,6 +12,27 @@ import AlertStore from './store/alertstore'
 import GroupStore from './store/groupStore'
 
 import styles from './styles/index.css'
+
+const appStyle = {
+  height: '100%'
+}
+
+const contentStyle = {
+  flex: 3,
+}
+
+const alertStyle = {
+  marginBottom: 0
+}
+
+const sidebarStyle = {
+  flex: 1,
+}
+
+const containerStyle = {
+  display: 'flex',
+  height: '100%'
+}
 
 class App extends Component {
 
@@ -47,7 +66,7 @@ class App extends Component {
 
   loadGroup = () => {
     var groups = GroupStore.getGroups()
-    if(groups === []) {
+    if(groups.length == 0) {
       return
     }
     browserHistory.push('/groups/' + groups[0].group_id)
@@ -86,26 +105,5 @@ class App extends Component {
     );
   }
 }
-
-const appStyle = {
-  height: '100%'
-}
-
-const contentStyle = {
-  flex: 3,
-}
-
-const alertStyle = {
-  marginBottom: 0
-}
-
-const sidebarStyle = {
-  flex: 1,
-}
-
-const containerStyle = {
-  display: "flex",
-  height: '100%'
-};
 
 export default App;

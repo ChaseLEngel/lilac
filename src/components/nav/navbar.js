@@ -2,20 +2,52 @@ import React, { Component, button } from 'react';
 
 import { Link } from 'react-router';
 
-import { Button, Nav, NavItem, NavLink} from 'reactstrap';
+import { Nav, NavItem, NavLink} from 'reactstrap';
 
 import GroupStore from '../../store/groupStore';
 import * as GroupActions from '../../actions/groupactions';
 
 import CreateGroup from '../group/create'
 
+const navbarHeaderStyle = {
+  paddingBottom: '0px',
+  padding: "10px",
+  fontSize: '120%',
+  color: '#97AFC3',
+  textDecorationLine: 'none !important'
+}
+
+const addGroupStyle = {
+  paddingLeft: '10px',
+  fontSize: '120%',
+  color: '#97AFC3',
+  background: 'none',
+  border: 'none',
+  fontWeight: 'bold',
+  cursor: 'pointer',
+}
+
+const navbarItemStyle = {
+  padding: "10px",
+  paddingTop: '0px'
+}
+
+const navBarTextStyle = {
+  color: "#8DA7BE"
+}
+
+const navbarStyle = {
+  flexDirection: 'column',
+  background: "#587291",
+  height: '100%',
+  minHeight: '100%'
+}
+
 class Navbar extends Component {
 
   constructor() {
     super()
-
     this.getGroups = this.getGroups.bind(this)
-
     this.state = {
       groups: [],
       showCreateGroup: false
@@ -65,49 +97,21 @@ class Navbar extends Component {
         </NavItem>
         {this.listGroups()}
         <hr />
-        <NavItem style={navbarItemStyle}>
-          <NavLink style={navBarTextStyle} tag={Link} to={"/machines"}>Machines</NavLink>
+        <NavItem style={navbarHeaderStyle}>
+          <NavLink style={navBarHeaderItemStyle} tag={Link} to={"/machines"}>Machines</NavLink>
         </NavItem>
-        <NavItem style={navbarItemStyle}>
-          <NavLink style={navBarTextStyle} tag={Link} to={"/login"}>Log out</NavLink>
+        <NavItem style={navbarHeaderStyle}>
+          <NavLink style={navBarHeaderItemStyle} tag={Link} to={"/login"}>Log out</NavLink>
         </NavItem>
       </Nav>
     );
   }
 }
 
-const navbarHeaderStyle = {
-  paddingBottom: '0px',
-  padding: "10px",
-  fontSize: '120%',
-  color: '#97AFC3',
-  textDecorationLine: 'none !important'
+const navBarHeaderItemStyle = {
+  color: "#8DA7BE",
+  paddingLeft: "0px",
+  paddingButton: "0px"
 }
-
-const addGroupStyle = {
-  paddingLeft: '10px',
-  fontSize: '120%',
-  color: '#97AFC3',
-  background: 'none',
-  border: 'none',
-  fontWeight: 'bold',
-  cursor: 'pointer',
-}
-
-const navbarItemStyle = {
-  padding: "10px",
-  paddingTop: '0px'
-}
-
-const navBarTextStyle = {
-  color: "#8DA7BE"
-}
-
-const navbarStyle = {
-  flexDirection: 'column',
-  background: "#587291",
-  height: '100%',
-  minHeight: '100%'
-};
 
 export default Navbar;

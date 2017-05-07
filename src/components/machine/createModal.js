@@ -8,22 +8,23 @@ class CreateMachineModal extends Component {
 
   constructor() {
     super()
-    var machine = {host: "", user: "", port: ""}
     this.state = {
-      machine: machine
+      machine: {host: "", user: "", port: ""}
     }
-    this.hostChange = this.hostChange.bind(this)
-    this.userChange = this.userChange.bind(this)
-    this.portChange = this.portChange.bind(this)
-    this.create = this.create.bind(this)
-  }
-  
-  create() {
-    MachineActions.createMachine(this.state.machine) 
-    this.props.toggler()
   }
 
-  hostChange(event) {
+  closeModal = () => {
+    this.setState({
+      machine: {host: "", user: "", port: ""}
+    })
+    this.props.toggler()
+  }
+  
+  create = () => {
+    MachineActions.createMachine(this.state.machine) 
+  }
+
+  hostChange = (event) => {
     var machine = this.state.machine
     machine.host = event.target.value
     this.setState({
@@ -31,7 +32,7 @@ class CreateMachineModal extends Component {
     })
   }
 
-  userChange(event) {
+  userChange = (event) => {
     var machine = this.state.machine
     machine.user = event.target.value
     this.setState({
@@ -39,7 +40,7 @@ class CreateMachineModal extends Component {
     })
   }
 
-  portChange(event) {
+  portChange = (event) => {
     var machine = this.state.machine
     machine.port = event.target.value
     this.setState({
@@ -50,7 +51,7 @@ class CreateMachineModal extends Component {
   render() {
     return (
       <div>
-        <Modal isOpen={this.props.show} toggle={this.props.toggler}>
+        <Modal isOpen={this.props.show} toggle={this.closeModal}>
           <ModalHeader>
             New Machine
           </ModalHeader>
@@ -68,7 +69,7 @@ class CreateMachineModal extends Component {
           </ModalBody>
           <ModalFooter>
             <Button color="primary" onClick={this.create}>Create</Button>
-            <Button color="secondary" onClick={this.props.toggler}>Cancel</Button>
+            <Button color="secondary" onClick={this.closeModal}>Cancel</Button>
           </ModalFooter>
         </Modal>
       </div>

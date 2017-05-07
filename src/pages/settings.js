@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { Card, CardHeader, CardBlock, Row, Col, Form, FormGroup, Label, Input, Button } from 'reactstrap'
+import { Card, CardHeader, CardBlock, Row, Col, Input, Button } from 'reactstrap'
 
 import { browserHistory } from 'react-router'
 
@@ -139,12 +139,6 @@ class Settings extends Component {
      </div>
     )
   }
-}
-
-const formStyle = {
-}
-
-const formRowStyle = {
 }
 
 export default Settings

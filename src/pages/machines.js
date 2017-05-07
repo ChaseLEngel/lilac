@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { Card, CardBlock, CardHeader, Button, ListGroup, ListGroupItem} from 'reactstrap'
+import { Card, CardBlock, CardHeader, Button, ListGroup } from 'reactstrap'
 
 import MachineItem from '../components/machine/item'
 
@@ -48,7 +48,6 @@ class Machines extends Component {
   }
 
   render() {
-    var machines = this.machineList()
     return (
       <Card>
           <CreateMachineModal toggler={this.toggleCreateModal} show={this.state.showCreateModal} />
@@ -58,7 +57,7 @@ class Machines extends Component {
         </CardHeader>
         <CardBlock>
           <ListGroup>
-            {machines}
+            {this.machineList()}
           </ListGroup>
         </CardBlock>
       </Card>

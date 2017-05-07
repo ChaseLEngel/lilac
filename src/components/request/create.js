@@ -12,26 +12,21 @@ class CreateRequest extends Component {
     this.state = {
       request: request
     }
-    this.regexChange = this.regexChange.bind(this)
-    this.nameChange = this.nameChange.bind(this)
-    this.downloadPathChange = this.downloadPathChange.bind(this)
-    this.create = this.create.bind(this)
-    this.closeModal = this.closeModal.bind(this)
   }
 
-  create() {
+  create = () => {
     RequestActions.createRequest(this.props.group_id, this.state.request)
     this.closeModal()
   }
 
-  closeModal() {
+  closeModal = () => {
     this.setState({
-      request: []
+      request: {regex: "", download_path: "", name: ""}
     })
     this.props.toggler()
   }
 
-  nameChange(event) {
+  nameChange = (event) => {
     var request = this.state.request
     request.name = event.target.value
     this.setState({
@@ -39,7 +34,7 @@ class CreateRequest extends Component {
     })
   }
 
-  downloadPathChange(event) {
+  downloadPathChange = (event) => {
     var request = this.state.request
     request.download_path = event.target.value
     this.setState({
@@ -47,7 +42,7 @@ class CreateRequest extends Component {
     })
   }
 
-  regexChange(event) {
+  regexChange = (event) => {
     var request = this.state.request
     request.regex = event.target.value
     this.setState({
@@ -58,7 +53,7 @@ class CreateRequest extends Component {
   render() {
     return (
       <div>
-        <Modal isOpen={this.props.show} toggle={this.props.toggler}>
+        <Modal isOpen={this.props.show} toggle={this.closeModal} >
           <ModalHeader>
             New Request
           </ModalHeader>
