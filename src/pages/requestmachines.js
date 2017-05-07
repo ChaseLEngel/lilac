@@ -16,8 +16,14 @@ class RequestMachines extends Component {
     super()
     this.state = {
       machines: MachineStore.getMachines(),
-      selected: RequestMachineStore.getRequestMachines(props.params.request_id)
+      selected: this.stripRequestMachines(RequestMachineStore.getRequestMachines(props.params.request_id))
     }
+  }
+
+  stripRequestMachines = (requestMachines) => {
+    return requestMachines.map(function(rm) {
+      return {machine_id: rm.machine_id.toString(), destination: rm.destination}
+    })
   }
 
   destinationChange = (event) => {
@@ -75,12 +81,11 @@ class RequestMachines extends Component {
 
   getRequestMachines = () => {
     this.setState({
-      selected: RequestMachineStore.getRequestMachines(this.props.params.request_id)
+      selected: this.stripRequestMachines(RequestMachineStore.getRequestMachines(this.props.params.request_id))
     })
   }
 
   active = (id) => {
-    console.log(this.state.selected)
     if(this.find(id) === undefined) {
       return false
     }
