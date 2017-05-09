@@ -1,12 +1,24 @@
 import * as AlertActions from '../actions/alertactions'
 
+import { browserHistory } from 'react-router'
+
+import LoginStore from '../store/loginstore'
+
 const URL = "http://localhost:8080"
 
 function contact(url, method, body) {
   var json = JSON.stringify(body)
-  return fetch(url, {method: method, body: json})
+  var headers = {}
+  if(url !== URL+"/login") {
+    headers = { 'Authorization': "Bearer " + LoginStore.getToken() }
+  }
+
+  return fetch(url, { method: method, headers: headers, body: json })
     .then((response) => response.json())
     .then((json) => {
+      if(json.status.code == 401) {
+        browserHistory.push('/login')
+      }
       if(json.status.code != 200 || json.status.error != "") {
         AlertActions.alert(json.status.error)
       }
@@ -108,6 +120,10 @@ var api = {
   transfer(file) {
     var uri = URL+"/transfer"
     return contact(uri, 'POST', {file: file})
+  },
+  login(user, password) {
+    var uri = URL+"/login"
+    return contact(uri, 'POST', {user: user, password: password})
   }
 }
 

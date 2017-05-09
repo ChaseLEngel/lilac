@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 
-import { browserHistory } from 'react-router';
-
 import { Row, Col, Input, Button } from 'reactstrap'
+
+import * as LoginActions from '../actions/loginactions'
+
+import LoginStore from '../store/loginstore'
 
 const h1Style = {
   marginBottom: '-15px',
@@ -20,9 +22,31 @@ const LoginStyle = {
 }
 
 class Login extends Component {
-  login = () => {
-    browserHistory.push('/')
+
+  constructor() {
+    super()
+    this.state = {
+      user: "",
+      password: ""
+    }
   }
+
+  userChange = (event) => {
+    this.setState({
+      user: event.target.value
+    })
+  }
+
+  passwordChange = (event) => {
+    this.setState({
+      password: event.target.value
+    })
+  }
+
+  login = () => {
+    LoginActions.login(this.state.user, this.state.password)
+  }
+
   render() {
     return (
       <div style={LoginStyle}>
@@ -34,12 +58,12 @@ class Login extends Component {
         <Row>
           <Col>
             <hr />
-            <Input placeholder='User' type='text'/>
+            <Input placeholder='User' type='text' onChange={this.userChange}/>
           </Col>
         </Row>
         <Row>
           <Col>
-            <Input placeholder='Password' type='password'/>
+            <Input placeholder='Password' type='password' onChange={this.passwordChange}/>
           </Col>
         </Row>
         <Row>
