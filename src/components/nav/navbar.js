@@ -1,11 +1,12 @@
-import React, { Component, button } from 'react';
+import React, { Component, button } from 'react'
 
-import { Link } from 'react-router';
+import { Link } from 'react-router'
 
-import { Nav, NavItem, NavLink} from 'reactstrap';
+import { Nav, NavItem, NavLink} from 'reactstrap'
 
-import GroupStore from '../../store/groupStore';
-import * as GroupActions from '../../actions/groupactions';
+import GroupStore from '../../store/groupStore'
+import LoginStore from '../../store/loginstore'
+import * as GroupActions from '../../actions/groupactions'
 
 import CreateGroup from '../group/create'
 
@@ -87,6 +88,10 @@ class Navbar extends Component {
       )})
   }
 
+  logOut = () => {
+    LoginStore.deleteToken()
+  }
+
   render() {
     return (
       <Nav style={navbarStyle}>
@@ -101,7 +106,7 @@ class Navbar extends Component {
           <NavLink style={navBarHeaderItemStyle} tag={Link} to={"/machines"}>Machines</NavLink>
         </NavItem>
         <NavItem style={navbarHeaderStyle}>
-          <NavLink style={navBarHeaderItemStyle} tag={Link} to={"/login"}>Log out</NavLink>
+          <NavLink style={navBarHeaderItemStyle} tag={Link} to={"/login"} onClick={this.logOut}>Log out</NavLink>
         </NavItem>
       </Nav>
     );

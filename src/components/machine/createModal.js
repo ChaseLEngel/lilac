@@ -22,6 +22,7 @@ class CreateMachineModal extends Component {
   
   create = () => {
     MachineActions.createMachine(this.state.machine) 
+    this.closeModal()
   }
 
   hostChange = (event) => {
