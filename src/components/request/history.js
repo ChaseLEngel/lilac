@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import {ListGroup, ListGroupItem, Row, Col, Button} from 'reactstrap'
+import {ListGroup, ListGroupItem, Button, ButtonGroup} from 'reactstrap'
 
 import Helpers from '../../helpers'
 
@@ -8,7 +8,16 @@ import RequestStore from '../../store/requeststore'
 
 import * as HistoryActions from '../../actions/historyactions'
 
+import DetailsModal from './detailsModal'
+
 class History extends Component {
+
+  constructor(props) {
+    super()
+    this.state = {
+      showDetailsModal: false
+    }
+  }
 
   deleteHistory = () => {
     var group_id = RequestStore.getRequest(this.props.history.request_id).group_id
@@ -19,21 +28,33 @@ class History extends Component {
     )
   }
 
+  toggleDetailsModal = () => {
+    this.setState({
+      showDetailsModal: !this.state.showDetailsModal
+    })
+  }
+
   render() {
     return (
-      <ListGroup style={ListGroupStyle}>
-        <ListGroupItem style={ListGroupItemStyle}>
-          <div>
-            {this.props.history.file}
-          </div>
-          <div>
-            {Helpers.formatTimestamp(this.props.history.timestamp)}
-          </div>
-          <div>
-            <Button size='sm' onClick={this.deleteHistory}>Delete</Button>
-          </div>
-        </ListGroupItem>
-      </ListGroup>
+      <div>
+        <DetailsModal toggler={this.toggleDetailsModal} history={this.props.history} show={this.state.showDetailsModal} />
+        <ListGroup style={ListGroupStyle}>
+          <ListGroupItem style={ListGroupItemStyle}>
+            <div>
+              {this.props.history.title}
+            </div>
+            <div>
+              {Helpers.formatTimestamp(this.props.history.timestamp)}
+            </div>
+            <div>
+              <ButtonGroup size='sm'>
+                <Button onClick={this.toggleDetailsModal}>Details</Button>
+                <Button onClick={this.deleteHistory}>Delete</Button>
+              </ButtonGroup>
+            </div>
+          </ListGroupItem>
+        </ListGroup>
+      </div>
     );
   }
 }

@@ -10,6 +10,11 @@ class LoginStore extends EventEmitter {
     localStorage.setItem('lilacToken', token);
   }
 
+  tokenExists = () => {
+    var ret = this.getToken() != null
+    return ret
+  }
+
   getToken = () => {
     return localStorage.getItem('lilacToken')
   }

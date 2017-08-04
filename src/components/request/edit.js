@@ -12,26 +12,14 @@ class EditRequest extends Component {
     this.state = {
       request: request
     }
-    this.downloadPathChange = this.downloadPathChange.bind(this)
-    this.regexChange = this.regexChange.bind(this)
-    this.nameChange = this.nameChange.bind(this)
-    this.edit = this.edit.bind(this)
   }
 
-  edit() {
+  edit = () => {
     RequestActions.editRequest(this.state.request)
     this.props.toggler()
   }
 
-  downloadPathChange(event) {
-    var request = this.state.request
-    request.download_path = event.target.value
-    this.setState({
-      request: request
-    })
-  }
-
-  nameChange(event) {
+  nameChange = (event) => {
     var request = this.state.request
     request.name = event.target.value
     this.setState({
@@ -39,7 +27,7 @@ class EditRequest extends Component {
     })
   }
 
-  regexChange(event) {
+  regexChange = (event) => {
     var request = this.state.request
     request.regex = event.target.value
     this.setState({
@@ -67,8 +55,6 @@ class EditRequest extends Component {
                 <Input type="text" name="editRequestName" id="editRequestName" value={this.state.request.name} onChange={this.nameChange}/>
                 <Label for="editRequestRegex">Regex</Label>
                 <Input type="text" name="editRequestregex" id="editRequestRegex" value={this.state.request.regex} onChange={this.regexChange}/>
-                <Label for="editRequestDownloadPath">Download Path (optional)</Label>
-                <Input type="text" name="editRequestdownloadPath" id="editRequestDownloadPath" value={this.state.request.download_path} onChange={this.downloadPathChange}/>
               </FormGroup>
             </Form>
           </ModalBody>

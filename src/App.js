@@ -10,6 +10,7 @@ import * as MachineActions from './actions/machineactions'
 
 import AlertStore from './store/alertstore'
 import GroupStore from './store/groupStore'
+import LoginStore from './store/loginstore'
 
 import styles from './styles/index.css'
 
@@ -73,6 +74,9 @@ class App extends Component {
   }
 
   componentWillMount () {
+    if(!LoginStore.tokenExists()) {
+      browserHistory.replace('/login')
+    }
     AlertStore.on("change", this.getAlert)
   }
 

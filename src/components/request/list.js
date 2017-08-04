@@ -45,7 +45,8 @@ class RequestList extends Component {
   }
 
   requestsList() {
-    return this.state.requests.map((request) => {
+    var sorted = this.state.requests.sort(function (a, b) { return a.name > b.name })
+    return sorted.map((request) => {
       return <Request key={request.request_id} request={request}/>
     })
   }
